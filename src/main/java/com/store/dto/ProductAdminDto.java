@@ -1,4 +1,4 @@
-package dto;
+package com.store.dto;
 
 import com.store.entity.ProductStatus;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDto {
+public class ProductAdminDto {
     private int article;
     private String name;
     private BigDecimal price;
