@@ -2,6 +2,7 @@ package com.store.service.impl;
 
 import com.store.dto.ProductAdminDto;
 import com.store.entity.Product;
+import com.store.entity.ProductStatus;
 import com.store.repository.ProductAdminRepository;
 import com.store.service.ProductAdminService;
 import lombok.RequiredArgsConstructor;
@@ -15,13 +16,14 @@ public class ProductAdminServiceImpl implements ProductAdminService {
 
     @Override
     public Product addProduct(ProductAdminDto productAdminDto) {
-        Product product = new Product();
-        product.setArticle(productAdminDto.getArticle());
-        product.setName(productAdminDto.getName());
-        product.setPrice(productAdminDto.getPrice());
-        product.setCategory(productAdminDto.getCategory());
-        product.setDescription(productAdminDto.getDescription());
-        product.setQuantity(productAdminDto.getQuantity());
-        return productAdminRepository.save(product);
+        return productAdminRepository.save(
+                new Product()
+                        .setArticle(productAdminDto.getArticle())
+                        .setName(productAdminDto.getName())
+                        .setPrice(productAdminDto.getPrice())
+                        .setCategory(productAdminDto.getCategory())
+                        .setDescription(productAdminDto.getDescription())
+                        .setQuantity(productAdminDto.getQuantity())
+                        .setIsDeleted(ProductStatus.ACTIVE));
     }
 }
