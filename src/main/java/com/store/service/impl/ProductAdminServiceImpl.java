@@ -15,8 +15,8 @@ public class ProductAdminServiceImpl implements ProductAdminService {
     private final ProductAdminRepository productAdminRepository;
 
     @Override
-    public Product addProduct(ProductAdminDto productAdminDto) {
-        return productAdminRepository.save(
+    public ProductAdminDto addProduct(ProductAdminDto productAdminDto) {
+        Product save = productAdminRepository.save(
                 new Product()
                         .setArticle(productAdminDto.getArticle())
                         .setName(productAdminDto.getName())
@@ -24,6 +24,20 @@ public class ProductAdminServiceImpl implements ProductAdminService {
                         .setCategory(productAdminDto.getCategory())
                         .setDescription(productAdminDto.getDescription())
                         .setQuantity(productAdminDto.getQuantity())
-                        .setIsDeleted(ProductStatus.ACTIVE));
+                        .setProductStatus(ProductStatus.ACTIVE));
+
+
+        return mapProductToProductAdminDto(save);
+    }
+
+    public ProductAdminDto mapProductToProductAdminDto(Product product){
+        return new ProductAdminDto()
+               .setArticle(product.getArticle())
+               .setName(product.getName())
+               .setPrice(product.getPrice())
+               .setCategory(product.getCategory())
+               .setDescription(product.getDescription())
+               .setQuantity(product.getQuantity())
+               .setProductStatus(ProductStatus.ACTIVE);
     }
 }

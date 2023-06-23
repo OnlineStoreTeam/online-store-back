@@ -23,5 +23,5 @@ public class Product {
     private String category;
     private String description;
     private int quantity;
-    private ProductStatus isDeleted;
+    private ProductStatus productStatus;
 }

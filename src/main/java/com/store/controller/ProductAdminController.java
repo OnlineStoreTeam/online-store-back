@@ -1,9 +1,10 @@
 package com.store.controller;
 
 import com.store.dto.ProductAdminDto;
-import com.store.entity.Product;
 import com.store.service.ProductAdminService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -18,8 +19,8 @@ public class ProductAdminController {
     private final ProductAdminService productAdminService;
 
     @PostMapping
-    public Long addProduct(@RequestBody ProductAdminDto productAdminDto) {
-        Product product = productAdminService.addProduct(productAdminDto);
-        return product.getId();
+    public ResponseEntity<ProductAdminDto> addProduct(@RequestBody ProductAdminDto productAdminDto) {
+        ProductAdminDto productAdminDto1 = productAdminService.addProduct(productAdminDto);
+        return new ResponseEntity<>(productAdminDto1, HttpStatus.CREATED);
     }
 }
