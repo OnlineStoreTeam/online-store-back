@@ -1,6 +1,5 @@
 package com.store.dto;
 
-import com.store.entity.ProductStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,5 +18,4 @@ public class ProductAdminDto {
     private String category;
     private String description;
     private int quantity;
-    private ProductStatus isDeleted;
 }

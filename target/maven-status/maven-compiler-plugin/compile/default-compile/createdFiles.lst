@@ -1,4 +1,8 @@
 com\store\Application.class
-com\store\controller\TestController.class
-com\store\entity\ProductStatus.class
+com\store\controller\ProductAdminController.class
 com\store\entity\Product.class
+com\store\controller\TestController.class
+com\store\service\ProductAdminService.class
+com\store\dto\ProductAdminDto.class
+com\store\entity\ProductStatus.class
+com\store\repository\ProductAdminRepository.class
