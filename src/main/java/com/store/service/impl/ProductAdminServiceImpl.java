@@ -2,7 +2,6 @@ package com.store.service.impl;
 
 import com.store.dto.ProductAdminDto;
 import com.store.entity.Product;
-import com.store.entity.ProductStatus;
 import com.store.repository.ProductAdminRepository;
 import com.store.service.ProductAdminService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +23,7 @@ public class ProductAdminServiceImpl implements ProductAdminService {
                         .setCategory(productAdminDto.getCategory())
                         .setDescription(productAdminDto.getDescription())
                         .setQuantity(productAdminDto.getQuantity())
-                        .setProductStatus(ProductStatus.ACTIVE));
+                        .setProductStatus(productAdminDto.getProductStatus()));
 
 
         return mapProductToProductAdminDto(save);
@@ -38,6 +37,6 @@ public class ProductAdminServiceImpl implements ProductAdminService {
                .setCategory(product.getCategory())
                .setDescription(product.getDescription())
                .setQuantity(product.getQuantity())
-               .setProductStatus(ProductStatus.ACTIVE);
+               .setProductStatus(product.getProductStatus());
     }
 }
