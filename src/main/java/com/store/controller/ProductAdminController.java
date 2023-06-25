@@ -5,6 +5,7 @@ import com.store.service.ProductAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -19,7 +20,7 @@ public class ProductAdminController {
     private final ProductAdminService productAdminService;
 
     @PostMapping
-    public ResponseEntity<ProductAdminDto> addProduct(@RequestBody ProductAdminDto productAdminDto) {
+    public ResponseEntity<ProductAdminDto> addProduct(@RequestBody @Validated ProductAdminDto productAdminDto) {
         ProductAdminDto productAdminDto1 = productAdminService.addProduct(productAdminDto);
         return new ResponseEntity<>(productAdminDto1, HttpStatus.CREATED);
     }
