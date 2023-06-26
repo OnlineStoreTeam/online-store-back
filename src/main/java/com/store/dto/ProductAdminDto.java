@@ -1,5 +1,6 @@
 package com.store.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.store.entity.ProductStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
@@ -16,7 +18,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductAdminDto {
-    @NotNull(message = "Id is required")
+    @JsonIgnore
     private Long id;
     @NotNull(message = "Article is required")
     private int article;

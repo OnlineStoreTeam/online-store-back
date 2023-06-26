@@ -29,14 +29,15 @@ public class ProductAdminServiceImpl implements ProductAdminService {
         return mapProductToProductAdminDto(save);
     }
 
-    public ProductAdminDto mapProductToProductAdminDto(Product product){
+    public ProductAdminDto mapProductToProductAdminDto(Product product) {
         return new ProductAdminDto()
-               .setArticle(product.getArticle())
-               .setName(product.getName())
-               .setPrice(product.getPrice())
-               .setCategory(product.getCategory())
-               .setDescription(product.getDescription())
-               .setQuantity(product.getQuantity())
-               .setProductStatus(product.getProductStatus());
+                .setId(product.getId())
+                .setArticle(product.getArticle())
+                .setName(product.getName())
+                .setPrice(product.getPrice())
+                .setCategory(product.getCategory())
+                .setDescription(product.getDescription())
+                .setQuantity(product.getQuantity())
+                .setProductStatus(product.getProductStatus());
     }
 }
