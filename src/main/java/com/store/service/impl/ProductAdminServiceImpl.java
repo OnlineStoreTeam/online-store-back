@@ -6,6 +6,15 @@ import com.store.repository.ProductAdminRepository;
 import com.store.service.ProductAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 @Service
 @RequiredArgsConstructor
@@ -14,7 +23,7 @@ public class ProductAdminServiceImpl implements ProductAdminService {
     private final ProductAdminRepository productAdminRepository;
 
     @Override
-    public ProductAdminDto addProduct(ProductAdminDto productAdminDto) {
+    public ProductAdminDto addProduct(ProductAdminDto productAdminDto) throws IOException {
         Product save = productAdminRepository.save(
                 new Product()
                         .setArticle(productAdminDto.getArticle())
@@ -24,6 +33,11 @@ public class ProductAdminServiceImpl implements ProductAdminService {
                         .setDescription(productAdminDto.getDescription())
                         .setQuantity(productAdminDto.getQuantity())
                         .setProductStatus(productAdminDto.getProductStatus()));
+
+        if (productAdminDto.getImageFile() != null) {
+            String imagePath = saveImage(productAdminDto.getImageFile());
+            save.setImagePath(imagePath);
+        }
 
 
         return mapProductToProductAdminDto(save);
@@ -39,5 +53,22 @@ public class ProductAdminServiceImpl implements ProductAdminService {
                 .setDescription(product.getDescription())
                 .setQuantity(product.getQuantity())
                 .setProductStatus(product.getProductStatus());
+    }
+
+    public String saveImage(MultipartFile imageFile) throws IOException {
+        String fileName = StringUtils.cleanPath(imageFile.getOriginalFilename());
+        Path uploadDir = Paths.get("images");
+
+        if (!Files.exists(uploadDir)) {
+            Files.createDirectories(uploadDir);
+        }
+
+        try (InputStream inputStream = imageFile.getInputStream()) {
+            Path filePath = uploadDir.resolve(fileName);
+            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+            return filePath.toString();
+        } catch (IOException e) {
+            throw new IOException("Failed to save image", e);
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.store.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 
@@ -25,4 +26,8 @@ public class Product {
     private int quantity;
     @Column(name = "product_status")
     private ProductStatus productStatus;
+    @Column(name = "image_path")
+    private String imagePath;
+    @Transient
+    private MultipartFile imageFile;
 }
