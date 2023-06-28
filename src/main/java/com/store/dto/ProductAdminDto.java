@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 
@@ -35,4 +36,8 @@ public class ProductAdminDto {
     private int quantity;
     @NotNull(message = "ProductStatus is required")
     private ProductStatus productStatus;
+    @JsonIgnore
+    private String imagePath;
+    @JsonIgnore
+    private MultipartFile ImageFile;
 }

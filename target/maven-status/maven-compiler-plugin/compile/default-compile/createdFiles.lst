@@ -6,3 +6,4 @@ com\store\service\ProductAdminService.class
 com\store\dto\ProductAdminDto.class
 com\store\entity\ProductStatus.class
 com\store\repository\ProductAdminRepository.class
+com\store\service\impl\ProductAdminServiceImpl.class
