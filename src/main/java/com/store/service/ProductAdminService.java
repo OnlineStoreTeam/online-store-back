@@ -9,7 +9,5 @@ import java.io.IOException;
 public interface ProductAdminService {
 
     ProductAdminDto addProduct(ProductAdminDto productAdminDto) throws IOException;
-
     ProductAdminDto saveImage(Long productId, MultipartFile imageFile) throws IOException;
-    String uploadImage(MultipartFile imageFile) throws IOException;
 }

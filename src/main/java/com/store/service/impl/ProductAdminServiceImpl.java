@@ -51,12 +51,14 @@ public class ProductAdminServiceImpl implements ProductAdminService {
 
     public ProductAdminDto saveImage(Long productId, MultipartFile imageFile) throws IOException {
         Product product = productAdminRepository.findById(productId)
-            .orElseThrow(() -> new NotFoundException("Product not found with id: " + productId));
+                .orElseThrow(() -> new NotFoundException("Product not found with id: " + productId));
 
-    String imagePath = uploadImage(imageFile);
-    product.setImagePath(imagePath);
+        String imagePath = uploadImage(imageFile);
+        product.setImagePath(imagePath);
 
-    return mapProductToProductAdminDto(product);
+        Product save = productAdminRepository.save(product);
+
+        return mapProductToProductAdminDto(save);
     }
 
     public String uploadImage(MultipartFile imageFile) throws IOException {
