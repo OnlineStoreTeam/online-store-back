@@ -16,7 +16,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +24,7 @@ public class ProductAdminServiceImpl implements ProductAdminService {
     private final ProductAdminRepository productAdminRepository;
 
     @Override
-    public ProductAdminDto addProduct(ProductAdminDto productAdminDto) throws IOException {
+    public ProductAdminDto addProduct(ProductAdminDto productAdminDto) {
         Product save = productAdminRepository.save(
                 new Product()
                         .setArticle(productAdminDto.getArticle())
@@ -75,10 +74,5 @@ public class ProductAdminServiceImpl implements ProductAdminService {
         } catch (IOException e) {
             throw new IOException("Failed to save image", e);
         }
-    }
-
-    @Override
-    public List<ProductAdminDto> getAllProducts() {
-        return null;
     }
 }

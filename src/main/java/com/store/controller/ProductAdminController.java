@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * @version 0.0.1
@@ -34,10 +33,5 @@ public class ProductAdminController {
                                                      @PathVariable Long productId) throws IOException {
         ProductAdminDto productAdminDto1 = productAdminService.saveImage(productId, imageFile);
         return new ResponseEntity<>(productAdminDto1, HttpStatus.CREATED);
-    }
-
-    @GetMapping
-    public List<ProductAdminDto> getAllProducts() {
-        return productAdminService.getAllProducts();
     }
 }

@@ -11,5 +11,4 @@ public interface ProductAdminService {
 
     ProductAdminDto addProduct(ProductAdminDto productAdminDto) throws IOException;
     ProductAdminDto saveImage(Long productId, MultipartFile imageFile) throws IOException;
-    List<ProductAdminDto> getAllProducts();
 }
