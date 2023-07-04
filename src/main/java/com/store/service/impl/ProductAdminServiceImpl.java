@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -56,9 +57,7 @@ public class ProductAdminServiceImpl implements ProductAdminService {
         String imagePath = uploadImage(imageFile);
         product.setImagePath(imagePath);
 
-        Product save = productAdminRepository.save(product);
-
-        return mapProductToProductAdminDto(save);
+        return mapProductToProductAdminDto(productAdminRepository.save(product));
     }
 
     public String uploadImage(MultipartFile imageFile) throws IOException {
@@ -76,5 +75,10 @@ public class ProductAdminServiceImpl implements ProductAdminService {
         } catch (IOException e) {
             throw new IOException("Failed to save image", e);
         }
+    }
+
+    @Override
+    public List<ProductAdminDto> getAllProducts() {
+        return null;
     }
 }
