@@ -28,8 +28,9 @@ public class ProductAdminController {
         return new ResponseEntity<>(productAdminDto1.getId(), HttpStatus.CREATED);
     }
 
-    @PostMapping("/saveImage/{productId}")
-    public ResponseEntity<ProductAdminDto> saveImage(@RequestParam("imageFile") MultipartFile imageFile, @PathVariable Long productId) throws IOException {
+    @PostMapping("/{productId}/image")
+    public ResponseEntity<ProductAdminDto> saveImage(@RequestParam("imageFile") MultipartFile imageFile,
+                                                     @PathVariable Long productId) throws IOException {
         ProductAdminDto productAdminDto1 = productAdminService.saveImage(productId, imageFile);
         return new ResponseEntity<>(productAdminDto1, HttpStatus.CREATED);
     }

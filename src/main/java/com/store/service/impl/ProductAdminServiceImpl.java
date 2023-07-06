@@ -24,7 +24,7 @@ public class ProductAdminServiceImpl implements ProductAdminService {
     private final ProductAdminRepository productAdminRepository;
 
     @Override
-    public ProductAdminDto addProduct(ProductAdminDto productAdminDto) throws IOException {
+    public ProductAdminDto addProduct(ProductAdminDto productAdminDto) {
         Product save = productAdminRepository.save(
                 new Product()
                         .setArticle(productAdminDto.getArticle())
@@ -51,12 +51,12 @@ public class ProductAdminServiceImpl implements ProductAdminService {
 
     public ProductAdminDto saveImage(Long productId, MultipartFile imageFile) throws IOException {
         Product product = productAdminRepository.findById(productId)
-            .orElseThrow(() -> new NotFoundException("Product not found with id: " + productId));
+                .orElseThrow(() -> new NotFoundException("Product not found with id: " + productId));
 
-    String imagePath = uploadImage(imageFile);
-    product.setImagePath(imagePath);
+        String imagePath = uploadImage(imageFile);
+        product.setImagePath(imagePath);
 
-    return mapProductToProductAdminDto(product);
+        return mapProductToProductAdminDto(productAdminRepository.save(product));
     }
 
     public String uploadImage(MultipartFile imageFile) throws IOException {
