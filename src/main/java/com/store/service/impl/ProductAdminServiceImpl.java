@@ -5,6 +5,8 @@ import com.store.entity.Product;
 import com.store.repository.ProductAdminRepository;
 import com.store.service.ProductAdminService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -74,5 +77,15 @@ public class ProductAdminServiceImpl implements ProductAdminService {
         } catch (IOException e) {
             throw new IOException("Failed to save image", e);
         }
+    }
+
+    @Override
+    public List<ProductAdminDto> getAllProducts() {
+        return null;
+    }
+
+    @Override
+    public Page<ProductAdminDto> getAllProductsPage(PageRequest of) {
+        return null;
     }
 }
