@@ -5,8 +5,6 @@ import com.store.entity.Product;
 import com.store.repository.ProductAdminRepository;
 import com.store.service.ProductAdminService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -49,9 +48,11 @@ public class ProductAdminServiceImpl implements ProductAdminService {
                 .setCategory(product.getCategory())
                 .setDescription(product.getDescription())
                 .setQuantity(product.getQuantity())
-                .setProductStatus(product.getProductStatus());
+                .setProductStatus(product.getProductStatus())
+                .setImagePath(product.getImagePath());
     }
 
+    @Override
     public ProductAdminDto saveImage(Long productId, MultipartFile imageFile) throws IOException {
         Product product = productAdminRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException("Product not found with id: " + productId));
@@ -79,13 +80,27 @@ public class ProductAdminServiceImpl implements ProductAdminService {
         }
     }
 
-    @Override
     public List<ProductAdminDto> getAllProducts() {
-        return null;
+        List<Product> products = productAdminRepository.findAll();
+        List<ProductAdminDto> productAdminDtoList = new ArrayList<>();
+        for (Product product:products){
+            ProductAdminDto productAdminDto = mapProductToProductAdminDto(product);
+            productAdminDtoList.add(productAdminDto);
+        }
+        return productAdminDtoList;
     }
 
     @Override
-    public Page<ProductAdminDto> getAllProductsPage(PageRequest of) {
-        return null;
+    public List<ProductAdminDto> getActiveAndTemporarilyAbsentProducts() {
+        List<ProductAdminDto> products = getAllProducts();
+        List<ProductAdminDto> filteredProducts = new ArrayList<>();
+
+        for (ProductAdminDto product : products) {
+            String status = String.valueOf(product.getProductStatus());
+            if (status.equals("ACTIVE") || status.equals("TEMPORARILY_ABSENT")) {
+                filteredProducts.add(product);
+            }
+        }
+        return filteredProducts;
     }
 }

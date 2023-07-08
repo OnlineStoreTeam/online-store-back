@@ -3,8 +3,6 @@ package com.store.controller;
 import com.store.dto.ProductAdminDto;
 import com.store.service.ProductAdminService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -38,15 +36,17 @@ public class ProductAdminController {
         return new ResponseEntity<>(productAdminDto1, HttpStatus.CREATED);
     }
 
-    @GetMapping("/products")
-    public ResponseEntity<Integer> getAllProducts() {
-        List<ProductAdminDto> allProductAdminDto = productAdminService.getAllProducts();
-        return new ResponseEntity<>(allProductAdminDto.size(), HttpStatus.OK);
-    }
+    @GetMapping("/page")
+    public ResponseEntity<List<ProductAdminDto>> getAllProducts(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                        @RequestParam(value = "size", defaultValue = "10") int size) {
+        List<ProductAdminDto> products = productAdminService.getActiveAndTemporarilyAbsentProducts();
 
-    @GetMapping("/products/page")
-    public ResponseEntity<Page<ProductAdminDto>> getAllProductsPage(@RequestParam int page, @RequestParam int size) {
-        Page<ProductAdminDto> allProductAdminDto = productAdminService.getAllProductsPage(PageRequest.of(page, size));
-        return new ResponseEntity<>(allProductAdminDto, HttpStatus.OK);
+        int totalElements = products.size();
+        int start = page * size;
+        int end = Math.min(start + size, totalElements);
+
+        List<ProductAdminDto> paginatedProducts = products.subList(start, end);
+
+        return new ResponseEntity<>(paginatedProducts, HttpStatus.OK);
     }
 }
