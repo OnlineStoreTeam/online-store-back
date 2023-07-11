@@ -1,6 +1,7 @@
 package com.store.controller;
 
 import com.store.dto.ProductAdminDto;
+import com.store.dto.ProductAdminDtoGet;
 import com.store.service.ProductAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,15 +38,15 @@ public class ProductAdminController {
     }
 
     @GetMapping("/page")
-    public ResponseEntity<List<ProductAdminDto>> getAllProducts(@RequestParam(value = "page", defaultValue = "0") int page,
+    public ResponseEntity<List<ProductAdminDtoGet>> getAllProducts(@RequestParam(value = "page", defaultValue = "0") int page,
                                                         @RequestParam(value = "size", defaultValue = "10") int size) {
-        List<ProductAdminDto> products = productAdminService.getActiveAndTemporarilyAbsentProducts();
+        List<ProductAdminDtoGet> products = productAdminService.getActiveAndTemporarilyAbsentProducts();
 
         int totalElements = products.size();
         int start = page * size;
         int end = Math.min(start + size, totalElements);
 
-        List<ProductAdminDto> paginatedProducts = products.subList(start, end);
+        List<ProductAdminDtoGet> paginatedProducts = products.subList(start, end);
 
         return new ResponseEntity<>(paginatedProducts, HttpStatus.OK);
     }

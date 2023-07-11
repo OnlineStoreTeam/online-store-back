@@ -1,6 +1,7 @@
 package com.store.service.impl;
 
 import com.store.dto.ProductAdminDto;
+import com.store.dto.ProductAdminDtoGet;
 import com.store.entity.Product;
 import com.store.repository.ProductAdminRepository;
 import com.store.service.ProductAdminService;
@@ -48,8 +49,7 @@ public class ProductAdminServiceImpl implements ProductAdminService {
                 .setCategory(product.getCategory())
                 .setDescription(product.getDescription())
                 .setQuantity(product.getQuantity())
-                .setProductStatus(product.getProductStatus())
-                .setImagePath(product.getImagePath());
+                .setProductStatus(product.getProductStatus());
     }
 
     @Override
@@ -80,22 +80,22 @@ public class ProductAdminServiceImpl implements ProductAdminService {
         }
     }
 
-    public List<ProductAdminDto> getAllProducts() {
+    public List<ProductAdminDtoGet> getAllProducts() {
         List<Product> products = productAdminRepository.findAll();
-        List<ProductAdminDto> productAdminDtoList = new ArrayList<>();
-        for (Product product:products){
-            ProductAdminDto productAdminDto = mapProductToProductAdminDto(product);
-            productAdminDtoList.add(productAdminDto);
+        List<ProductAdminDtoGet> productAdminDtoList = new ArrayList<>();
+        for (Product product: products){
+            ProductAdminDtoGet productAdminDtoGet = new ProductAdminDtoGet().fromDto(product);
+            productAdminDtoList.add(productAdminDtoGet);
         }
         return productAdminDtoList;
     }
 
     @Override
-    public List<ProductAdminDto> getActiveAndTemporarilyAbsentProducts() {
-        List<ProductAdminDto> products = getAllProducts();
-        List<ProductAdminDto> filteredProducts = new ArrayList<>();
+    public List<ProductAdminDtoGet> getActiveAndTemporarilyAbsentProducts() {
+        List<ProductAdminDtoGet> products = getAllProducts();
+        List<ProductAdminDtoGet> filteredProducts = new ArrayList<>();
 
-        for (ProductAdminDto product : products) {
+        for (ProductAdminDtoGet product : products) {
             String status = String.valueOf(product.getProductStatus());
             if (status.equals("ACTIVE") || status.equals("TEMPORARILY_ABSENT")) {
                 filteredProducts.add(product);
