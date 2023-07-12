@@ -1,9 +1,10 @@
 package com.store.controller;
 
 import com.store.dto.ProductAdminDto;
-import com.store.dto.ProductAdminDtoGet;
 import com.store.service.ProductAdminService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * @version 0.0.1
@@ -37,17 +37,10 @@ public class ProductAdminController {
         return new ResponseEntity<>(productAdminDto1, HttpStatus.CREATED);
     }
 
-    @GetMapping("/page")
-    public ResponseEntity<List<ProductAdminDtoGet>> getAllProducts(@RequestParam(value = "page", defaultValue = "0") int page,
-                                                        @RequestParam(value = "size", defaultValue = "10") int size) {
-        List<ProductAdminDtoGet> products = productAdminService.getActiveAndTemporarilyAbsentProducts();
-
-        int totalElements = products.size();
-        int start = page * size;
-        int end = Math.min(start + size, totalElements);
-
-        List<ProductAdminDtoGet> paginatedProducts = products.subList(start, end);
-
-        return new ResponseEntity<>(paginatedProducts, HttpStatus.OK);
+    @GetMapping()
+    public ResponseEntity<Page<ProductAdminDto>> getAllProducts(@RequestParam int page, @RequestParam int size) {
+        Page<ProductAdminDto> products = productAdminService
+                .getActiveAndTemporarilyAbsentProducts(PageRequest.of(page, size));
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 }

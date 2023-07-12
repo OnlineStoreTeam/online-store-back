@@ -1,11 +1,12 @@
 package com.store.service.impl;
 
 import com.store.dto.ProductAdminDto;
-import com.store.dto.ProductAdminDtoGet;
 import com.store.entity.Product;
 import com.store.repository.ProductAdminRepository;
 import com.store.service.ProductAdminService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,8 +18,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -49,7 +48,8 @@ public class ProductAdminServiceImpl implements ProductAdminService {
                 .setCategory(product.getCategory())
                 .setDescription(product.getDescription())
                 .setQuantity(product.getQuantity())
-                .setProductStatus(product.getProductStatus());
+                .setProductStatus(product.getProductStatus())
+                .setImagePath(product.getImagePath());
     }
 
     @Override
@@ -80,27 +80,8 @@ public class ProductAdminServiceImpl implements ProductAdminService {
         }
     }
 
-    public List<ProductAdminDtoGet> getAllProducts() {
-        List<Product> products = productAdminRepository.findAll();
-        List<ProductAdminDtoGet> productAdminDtoList = new ArrayList<>();
-        for (Product product: products){
-            ProductAdminDtoGet productAdminDtoGet = new ProductAdminDtoGet().fromDto(product);
-            productAdminDtoList.add(productAdminDtoGet);
-        }
-        return productAdminDtoList;
-    }
-
     @Override
-    public List<ProductAdminDtoGet> getActiveAndTemporarilyAbsentProducts() {
-        List<ProductAdminDtoGet> products = getAllProducts();
-        List<ProductAdminDtoGet> filteredProducts = new ArrayList<>();
-
-        for (ProductAdminDtoGet product : products) {
-            String status = String.valueOf(product.getProductStatus());
-            if (status.equals("ACTIVE") || status.equals("TEMPORARILY_ABSENT")) {
-                filteredProducts.add(product);
-            }
-        }
-        return filteredProducts;
+    public Page<ProductAdminDto> getActiveAndTemporarilyAbsentProducts(Pageable paging) {
+        return productAdminRepository.findAll(paging).map(ProductAdminDto::fromEntity);
     }
 }
