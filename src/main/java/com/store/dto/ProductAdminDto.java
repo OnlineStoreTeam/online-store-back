@@ -2,13 +2,11 @@ package com.store.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.store.entity.ProductStatus;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,9 +19,14 @@ import java.math.BigDecimal;
 public class ProductAdminDto {
     @JsonIgnore
     private Long id;
-    @NotNull(message = "Article is required")
-    private int article;
+    @NotBlank(message = "Article is required")
+    @Column(unique = true)
+    @Pattern(regexp = "^[A-Z0-9]+$", message = "Article should only contain alphanumeric characters")
+    @Size(min = 3, max = 8, message = "Article should be between 3 and 8 characters long")
+    private String article;
     @NotBlank(message = "Name is required")
+    @Pattern(regexp = "^[a-zA-Z0-9 _,.-]+$", message = "Name should only contain alphanumeric characters")
+    @Size(min = 2, max = 50, message = "Name should be between 2 and 50 characters long")
     private String name;
     @NotNull(message = "Price is required")
     @PositiveOrZero(message = "Price must be a positive number")
@@ -31,12 +34,13 @@ public class ProductAdminDto {
     @NotBlank(message = "Category is required")
     private String category;
     @NotBlank(message = "Description is required")
+    @Pattern(regexp = "^[a-zA-Z0-9 '&!#%()*+,.:;_-]+$", message = "Description should only contain alphanumeric characters")
+    @Size(min = 2,max = 255, message = "Description should be between 2 and 255 characters long")
     private String description;
     @PositiveOrZero(message = "Price must be a positive number")
     private int quantity;
     @NotNull(message = "ProductStatus is required")
     private ProductStatus productStatus;
-    @JsonIgnore
     private String imagePath;
     @JsonIgnore
     private MultipartFile ImageFile;

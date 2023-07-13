@@ -25,6 +25,9 @@ public class ProductAdminServiceImpl implements ProductAdminService {
 
     @Override
     public ProductAdminDto addProduct(ProductAdminDto productAdminDto) {
+        if (productAdminRepository.findByArticle(productAdminDto.getArticle()) != null){
+            throw new IllegalArgumentException("Product with the same article already exists");
+        }
         Product save = productAdminRepository.save(
                 new Product()
                         .setArticle(productAdminDto.getArticle())

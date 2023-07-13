@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductAdminRepository extends JpaRepository<Product, Long> {
 
+    Product findByArticle(String article);
 }
