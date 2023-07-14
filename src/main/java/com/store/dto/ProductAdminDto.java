@@ -29,7 +29,7 @@ public class ProductAdminDto {
     @Size(min = 2, max = 50, message = "Name should be between 2 and 50 characters long")
     private String name;
     @NotNull(message = "Price is required")
-    @PositiveOrZero(message = "Price must be a positive number")
+    @Positive(message = "Price must be a positive number")
     private BigDecimal price;
     @NotBlank(message = "Category is required")
     private String category;
