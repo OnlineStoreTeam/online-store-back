@@ -3,6 +3,8 @@ package com.store.controller;
 import com.store.dto.ProductAdminDto;
 import com.store.service.ProductAdminService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -33,5 +35,12 @@ public class ProductAdminController {
                                                      @PathVariable Long productId) throws IOException {
         ProductAdminDto productAdminDto1 = productAdminService.saveImage(productId, imageFile);
         return new ResponseEntity<>(productAdminDto1, HttpStatus.CREATED);
+    }
+
+    @GetMapping()
+    public ResponseEntity<Page<ProductAdminDto>> getAllProducts(@RequestParam int page, @RequestParam int size) {
+        Page<ProductAdminDto> products = productAdminService
+                .getActiveAndTemporarilyAbsentProducts(PageRequest.of(page, size));
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 }

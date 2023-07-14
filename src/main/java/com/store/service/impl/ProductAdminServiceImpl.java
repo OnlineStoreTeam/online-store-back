@@ -5,6 +5,8 @@ import com.store.entity.Product;
 import com.store.repository.ProductAdminRepository;
 import com.store.service.ProductAdminService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,9 +48,11 @@ public class ProductAdminServiceImpl implements ProductAdminService {
                 .setCategory(product.getCategory())
                 .setDescription(product.getDescription())
                 .setQuantity(product.getQuantity())
-                .setProductStatus(product.getProductStatus());
+                .setProductStatus(product.getProductStatus())
+                .setImagePath(product.getImagePath());
     }
 
+    @Override
     public ProductAdminDto saveImage(Long productId, MultipartFile imageFile) throws IOException {
         Product product = productAdminRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException("Product not found with id: " + productId));
@@ -74,5 +78,10 @@ public class ProductAdminServiceImpl implements ProductAdminService {
         } catch (IOException e) {
             throw new IOException("Failed to save image", e);
         }
+    }
+
+    @Override
+    public Page<ProductAdminDto> getActiveAndTemporarilyAbsentProducts(Pageable paging) {
+        return productAdminRepository.findAll(paging).map(ProductAdminDto::fromEntity);
     }
 }

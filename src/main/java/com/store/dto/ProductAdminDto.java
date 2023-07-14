@@ -1,6 +1,7 @@
 package com.store.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.store.entity.Product;
 import com.store.entity.ProductStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,7 +9,6 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,8 +36,19 @@ public class ProductAdminDto {
     private int quantity;
     @NotNull(message = "ProductStatus is required")
     private ProductStatus productStatus;
-    @JsonIgnore
     private String imagePath;
     @JsonIgnore
     private MultipartFile ImageFile;
+
+    public static ProductAdminDto fromEntity(Product product) {
+        return new ProductAdminDto()
+                .setArticle(product.getArticle())
+                .setName(product.getName())
+                .setPrice(product.getPrice())
+                .setCategory(product.getCategory())
+                .setDescription(product.getDescription())
+                .setQuantity(product.getQuantity())
+                .setProductStatus(product.getProductStatus())
+                .setImagePath(product.getImagePath());
+    }
 }
