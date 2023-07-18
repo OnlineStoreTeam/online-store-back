@@ -18,7 +18,8 @@ public class Product {
     @GeneratedValue(strategy=GenerationType.SEQUENCE,generator = SEQ_NAME)
     @SequenceGenerator(name = SEQ_NAME, sequenceName = SEQ_NAME, allocationSize = 1)
     private Long id;
-    private int article;
+    @Column(unique = true)
+    private String article;
     private String name;
     private BigDecimal price;
     private String category;
