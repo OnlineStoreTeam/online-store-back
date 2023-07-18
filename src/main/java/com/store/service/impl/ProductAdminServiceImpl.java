@@ -84,4 +84,14 @@ public class ProductAdminServiceImpl implements ProductAdminService {
     public Page<ProductAdminDto> getActiveAndTemporarilyAbsentProducts(Pageable paging) {
         return productAdminRepository.findAll(paging).map(ProductAdminDto::fromEntity);
     }
+
+    @Override
+    public ProductAdminDto updateProduct(Long productId, ProductAdminDto productAdminDto) {
+        return null;
+    }
+
+    @Override
+    public ProductAdminDto updateImage(Long productId, MultipartFile imageFile) {
+        return null;
+    }
 }
