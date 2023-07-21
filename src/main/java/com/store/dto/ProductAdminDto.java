@@ -18,7 +18,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductAdminDto {
-    @JsonIgnore
     private Long id;
     @NotBlank(message = "Article is required")
     @Column(unique = true)
@@ -48,6 +47,7 @@ public class ProductAdminDto {
 
     public static ProductAdminDto fromEntity(Product product) {
         return new ProductAdminDto()
+                .setId(product.getId())
                 .setArticle(product.getArticle())
                 .setName(product.getName())
                 .setPrice(product.getPrice())
