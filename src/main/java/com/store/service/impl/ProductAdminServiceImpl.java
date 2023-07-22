@@ -2,6 +2,7 @@ package com.store.service.impl;
 
 import com.store.dto.ProductAdminDto;
 import com.store.entity.Product;
+import com.store.entity.ProductStatus;
 import com.store.repository.ProductAdminRepository;
 import com.store.service.ProductAdminService;
 import lombok.RequiredArgsConstructor;
@@ -83,5 +84,12 @@ public class ProductAdminServiceImpl implements ProductAdminService {
     @Override
     public Page<ProductAdminDto> getActiveAndTemporarilyAbsentProducts(Pageable paging) {
         return productAdminRepository.findAll(paging).map(ProductAdminDto::fromEntity);
+    }
+
+    @Override
+    public void deleteProduct(Long productId) {
+        Product product = productAdminRepository.findById(productId)
+                .orElseThrow(() -> new NotFoundException("Product not found with id: " + productId));
+        productAdminRepository.save(product.setProductStatus(ProductStatus.DELETE));
     }
 }

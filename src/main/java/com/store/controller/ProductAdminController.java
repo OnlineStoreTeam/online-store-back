@@ -43,4 +43,10 @@ public class ProductAdminController {
                 .getActiveAndTemporarilyAbsentProducts(PageRequest.of(page, size));
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<String> deleteProduct(@PathVariable Long productId){
+        productAdminService.deleteProduct(productId);
+        return new ResponseEntity<>("Product successfully removed.", HttpStatus.OK);
+    }
 }
