@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface ProductAdminService {
 
@@ -13,4 +14,6 @@ public interface ProductAdminService {
     ProductAdminDto saveImage(Long productId, MultipartFile imageFile) throws IOException;
     Page<ProductAdminDto> getActiveAndTemporarilyAbsentProducts(Pageable paging);
     void deleteProduct(Long productId);
+    ProductAdminDto updateProduct(Long productId, ProductAdminDto productAdminDto);
+    ProductAdminDto updateImage(Long productId, MultipartFile imageFile) throws IOException;
 }

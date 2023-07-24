@@ -92,4 +92,30 @@ public class ProductAdminServiceImpl implements ProductAdminService {
                 .orElseThrow(() -> new NotFoundException("Product not found with id: " + productId));
         productAdminRepository.save(product.setProductStatus(ProductStatus.DELETE));
     }
+
+    @Override
+    public ProductAdminDto updateProduct(Long productId, ProductAdminDto productAdminDto) {
+        Product product = productAdminRepository.findById(productId)
+                .orElseThrow(() -> new NotFoundException("Product not found with id: " + productId));
+        product.setArticle(productAdminDto.getArticle())
+                .setName(productAdminDto.getName())
+                .setPrice(productAdminDto.getPrice())
+                .setCategory(productAdminDto.getCategory())
+                .setDescription(productAdminDto.getDescription())
+                .setQuantity(productAdminDto.getQuantity())
+                .setProductStatus(productAdminDto.getProductStatus());
+        if(productAdminDto.getQuantity() == 0){
+            product.setProductStatus(ProductStatus.TEMPORARILY_ABSENT);
+        }
+        return mapProductToProductAdminDto(productAdminRepository.save(product));
+    }
+
+    @Override
+    public ProductAdminDto updateImage(Long productId, MultipartFile imageFile) throws IOException {
+        Product product = productAdminRepository.findById(productId)
+                .orElseThrow(() -> new NotFoundException("Product not found with id: " + productId));
+        String imagePath = uploadImage(imageFile);
+        product.setImagePath(imagePath);
+        return mapProductToProductAdminDto(productAdminRepository.save(product));
+    }
 }
