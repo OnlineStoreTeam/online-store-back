@@ -43,4 +43,18 @@ public class ProductAdminController {
                 .getActiveAndTemporarilyAbsentProducts(PageRequest.of(page, size));
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
+
+    @PutMapping("/{productId}")
+    public ResponseEntity<ProductAdminDto> updateProduct(@PathVariable Long productId,
+                                                         @RequestBody ProductAdminDto productAdminDto){
+        ProductAdminDto productAdminDto1 = productAdminService.updateProduct(productId, productAdminDto);
+        return new ResponseEntity<>(productAdminDto1, HttpStatus.OK);
+    }
+
+    @PutMapping("/{productId}/image")
+    public ResponseEntity<ProductAdminDto> updateImage(@PathVariable Long productId,
+                                                         @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
+        ProductAdminDto productAdminDto1 = productAdminService.updateImage(productId, imageFile);
+        return new ResponseEntity<>(productAdminDto1, HttpStatus.OK);
+    }
 }

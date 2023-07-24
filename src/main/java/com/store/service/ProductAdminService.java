@@ -13,4 +13,6 @@ public interface ProductAdminService {
     ProductAdminDto addProduct(ProductAdminDto productAdminDto) throws IOException;
     ProductAdminDto saveImage(Long productId, MultipartFile imageFile) throws IOException;
     Page<ProductAdminDto> getActiveAndTemporarilyAbsentProducts(Pageable paging);
+    ProductAdminDto updateProduct(Long productId, ProductAdminDto productAdminDto);
+    ProductAdminDto updateImage(Long productId, MultipartFile imageFile) throws IOException;
 }
