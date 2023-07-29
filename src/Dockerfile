@@ -1,5 +1,0 @@
-FROM mysql:latest
-MAINTAINER AnnaBabich
-EXPOSE 3306
-ENV MYSQL_DATABASE=online_store \
-    MYSQL_ROOT_PASSWORD=root
