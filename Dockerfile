@@ -1,5 +1,0 @@
-FROM openjdk:17
-MAINTAINER AnnaBabich
-EXPOSE 8080
-COPY target/online-store-back.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
