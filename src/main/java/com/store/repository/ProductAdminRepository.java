@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductAdminRepository extends JpaRepository<Product, Long> {
 
-    @Query(value = "SELECT * FROM products WHERE product_status <> 0;", nativeQuery = true)
+    @Query(value = "SELECT * FROM online_store.products WHERE product_status <> 0;", nativeQuery = true)
     Page<Product> findAll(Pageable pageable);
 }

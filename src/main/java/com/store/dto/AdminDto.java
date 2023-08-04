@@ -8,9 +8,8 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-@NoArgsConstructor
 @AllArgsConstructor
-public class AdminDTO {
+public class AdminDto {
 
     private final String userName = "admin";
     private final String password = "admin";
