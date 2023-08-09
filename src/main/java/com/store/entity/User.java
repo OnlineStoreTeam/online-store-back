@@ -2,15 +2,23 @@ package com.store.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+
+import java.util.Set;
 
 
 @Data
 @Accessors(chain = true)
 @Entity
 @Table(name = "users")
-public class User {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class User  {
 
     private static final String SEQ_NAME="product_seq";
 
@@ -24,7 +32,9 @@ public class User {
     private String lastName;
     @Email
     private String email;
+    private String username;
     private String password;
-    private Role role;
+    private Set<Role> roles;
     private boolean archive;
+    private boolean enable;
 }
