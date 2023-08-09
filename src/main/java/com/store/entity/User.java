@@ -34,6 +34,8 @@ public class User  {
     private String email;
     private String username;
     private String password;
+
+    @Enumerated(EnumType.STRING)
     private Set<Role> roles;
     private boolean archive;
     private boolean enable;
