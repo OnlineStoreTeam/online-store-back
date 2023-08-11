@@ -18,7 +18,7 @@ public class AuthorizationAdminController {
 
     private final AdminService adminService;
 
-    @PostMapping("")
+    @PostMapping()
     public ResponseEntity<String> adminRegistration(@RequestBody AdminDto adminDto) {
         return new ResponseEntity<>(adminService.adminRegistration(adminDto), HttpStatus.OK);
     }

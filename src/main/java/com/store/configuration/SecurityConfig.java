@@ -55,16 +55,16 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
 
-                .formLogin(Customizer.withDefaults())
-//            .formLogin(formLogin -> formLogin
-//                            .loginPage("/login")
-////						.failureUrl("/authentication/login?failed") // default is /login?error
-////						.loginProcessingUrl("/authentication/login/process") // default is /login
-//                            .usernameParameter("username")
-//                            .passwordParameter("password")
-//                            .defaultSuccessUrl("/*")
-//                            .permitAll()
-//            )
+//                .formLogin(Customizer.withDefaults())
+            .formLogin(formLogin -> formLogin
+                            .loginPage("/admin/login")
+//						.failureUrl("/authentication/login?failed") // default is /login?error
+//						.loginProcessingUrl("/authentication/login/process") // default is /login
+                            .usernameParameter("username")
+                            .passwordParameter("password")
+                            .defaultSuccessUrl("/admin")
+                            .permitAll()
+            )
                 .logout((logout) -> logout
                         .deleteCookies("JSESSIONID")
                         .permitAll())
