@@ -1,7 +1,6 @@
 package com.store.configuration;
 
 import com.store.security.CustomAuthenticationProvider;
-import com.store.security.DatabaseLoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,15 +18,10 @@ public class SecurityConfig {
     @Autowired
     private CustomAuthenticationProvider authProvider;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final DatabaseLoginSuccessHandler databaseLoginSuccessHandler;
 
-    public SecurityConfig(BCryptPasswordEncoder passwordEncoder,
-                          DatabaseLoginSuccessHandler databaseLoginSuccessHandler) {
-
+    public SecurityConfig(BCryptPasswordEncoder passwordEncoder){
         this.passwordEncoder = passwordEncoder;
-        this.databaseLoginSuccessHandler = databaseLoginSuccessHandler;
     }
-
 
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
@@ -37,34 +31,16 @@ public class SecurityConfig {
         return authenticationManagerBuilder.build();
     }
 
-//    @Bean
-//	public DaoAuthenticationProvider authenticationProvider() {
-//		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//		authProvider.setUserDetailsService(userDetailService);
-//		authProvider.setPasswordEncoder(passwordEncoder);
-//
-//		return authProvider;
-//	}
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/users/registration","/home").permitAll()
                         .anyRequest().authenticated()
                 )
-
-//                .formLogin(Customizer.withDefaults())
-            .formLogin(formLogin -> formLogin
-                            .loginPage("/admin/login")
-//						.failureUrl("/authentication/login?failed") // default is /login?error
-//						.loginProcessingUrl("/authentication/login/process") // default is /login
-                            .usernameParameter("username")
-                            .passwordParameter("password")
-                            .defaultSuccessUrl("/admin")
-                            .permitAll()
-            )
+                .httpBasic(Customizer.withDefaults())
+                .formLogin(Customizer.withDefaults())
                 .logout((logout) -> logout
                         .deleteCookies("JSESSIONID")
                         .permitAll())

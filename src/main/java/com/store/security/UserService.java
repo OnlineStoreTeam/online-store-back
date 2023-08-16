@@ -56,9 +56,4 @@ public class UserService {
         log.info("service:{} setup finished", UserService.class.getSimpleName());
 
     }
-//    public void updateAuthenticationType(String username, String oauth2ClientName) {
-//    	Role authType = Role.valueOf(oauth2ClientName.toUpperCase());
-//    	userRepository.updateAuthenticationType(username, authType);
-//    	System.out.println("Updated user's authentication type to " + authType);
-//    }
 }

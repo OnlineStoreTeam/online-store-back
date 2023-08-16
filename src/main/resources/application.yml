@@ -6,9 +6,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://dpg-cjb5b7ocfp5c73b9f350-a:5432/store_4g4n
-    username: heppyadmin
-    password: mjWEzk2Wq0lLBb6CWek4utZj7bYpFB9V
+    url: jdbc:postgresql://localhost:54250/store
+    username: postgres
+    password: postgres
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
