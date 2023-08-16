@@ -6,7 +6,7 @@ COPY . .
 
 RUN ./gradlew bootJar --no-daemon
 
-FROM openjdk:17-jdk-slim
+FROM openjdk:17-jdk
 
 EXPOSE 8080
 
