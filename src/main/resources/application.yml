@@ -1,0 +1,31 @@
+debug: false
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:54250/store
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: public
+        connection:
+          pool_size: 10
+          autocommit: true
+
+
+
+
+gcp:
+  vars:
+    admin.user: ${ADMIN_USERNAME:admin@gmail.com}
+    admin.password: ${ADMIN_PASSWORD:12345}
