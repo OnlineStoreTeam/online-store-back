@@ -31,7 +31,6 @@ public class SecurityConfig {
         return authenticationManagerBuilder.build();
     }
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
