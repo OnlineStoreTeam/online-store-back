@@ -12,4 +12,6 @@ public interface ProductAdminRepository extends JpaRepository<Product, Long> {
 
     @Query(value = "SELECT * FROM products WHERE product_status <> 0;", nativeQuery = true)
     Page<Product> findAll(Pageable pageable);
+
+    Page<Product> findProductsByCategoryContains(Pageable pageable, String category);
 }

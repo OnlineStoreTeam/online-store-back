@@ -7,4 +7,6 @@ import org.springframework.data.domain.Pageable;
 public interface ProductCatalogService {
 
     Page<ProductAdminDto> getProductCatalog(Pageable paging);
+
+    Page<ProductAdminDto> getProductCatalogByCategory(Pageable paging, String category);
 }

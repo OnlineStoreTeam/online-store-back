@@ -1,6 +1,7 @@
 package com.store.service.impl;
 
 import com.store.dto.ProductAdminDto;
+import com.store.entity.ProductStatus;
 import com.store.repository.ProductAdminRepository;
 import com.store.service.ProductCatalogService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,17 @@ public class ProductCatalogServiceImpl implements ProductCatalogService {
     public Page<ProductAdminDto> getProductCatalog(Pageable paging) {
         Page<ProductAdminDto>  products = productAdminRepository.findAll(paging).map(ProductAdminDto::fromEntity);
         List<ProductAdminDto> sortedProducts = products.stream()
+                .sorted(Comparator.comparing(ProductAdminDto::getProductStatus))
+                .collect(Collectors.toList());
+        return new PageImpl<>(sortedProducts, paging, products.getTotalElements());
+    }
+
+    @Override
+    public Page<ProductAdminDto> getProductCatalogByCategory(Pageable paging, String category) {
+        Page<ProductAdminDto>  products = productAdminRepository.findProductsByCategoryContains(paging, category)
+                .map(ProductAdminDto::fromEntity);
+        List<ProductAdminDto> sortedProducts = products.stream()
+                .filter(product -> !product.getProductStatus().equals(ProductStatus.DELETE))
                 .sorted(Comparator.comparing(ProductAdminDto::getProductStatus))
                 .collect(Collectors.toList());
         return new PageImpl<>(sortedProducts, paging, products.getTotalElements());
