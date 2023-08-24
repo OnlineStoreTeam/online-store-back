@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -26,9 +25,9 @@ public class ProductAdminController {
 
     @CrossOrigin(origins = "*")
     @PostMapping
-    public ResponseEntity<Long> addProduct(@RequestBody @Validated ProductAdminDto productAdminDto) throws IOException {
-        ProductAdminDto productAdminDto1 = productAdminService.addProduct(productAdminDto);
-        return new ResponseEntity<>(productAdminDto1.getId(), HttpStatus.CREATED);
+    public ResponseEntity<Long> addProduct(@RequestBody @Validated ProductAdminDto product) throws IOException {
+        ProductAdminDto productAdminDto = productAdminService.addProduct(product);
+        return new ResponseEntity<>(productAdminDto.getId(), HttpStatus.CREATED);
     }
 
     @CrossOrigin(origins = "*")
