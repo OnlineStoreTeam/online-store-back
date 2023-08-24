@@ -3,7 +3,7 @@ package com.store.service.impl;
 import com.store.dto.ProductAdminDto;
 import com.store.entity.ProductStatus;
 import com.store.repository.ProductAdminRepository;
-import com.store.service.ProductCatalogService;
+import com.store.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -16,12 +16,12 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ProductCatalogServiceImpl implements ProductCatalogService {
+public class ProductServiceImpl implements ProductService {
 
     private final ProductAdminRepository productAdminRepository;
 
     @Override
-    public Page<ProductAdminDto> getProductCatalog(Pageable paging) {
+    public Page<ProductAdminDto> findAll(Pageable paging) {
         Page<ProductAdminDto>  products = productAdminRepository.findAll(paging).map(ProductAdminDto::fromEntity);
         List<ProductAdminDto> sortedProducts = products.stream()
                 .sorted(Comparator.comparing(ProductAdminDto::getProductStatus))
@@ -30,7 +30,7 @@ public class ProductCatalogServiceImpl implements ProductCatalogService {
     }
 
     @Override
-    public Page<ProductAdminDto> getProductCatalogByCategory(Pageable paging, String category) {
+    public Page<ProductAdminDto> getAllByCategory(Pageable paging, String category) {
         Page<ProductAdminDto>  products = productAdminRepository.findProductsByCategoryContains(paging, category)
                 .map(ProductAdminDto::fromEntity);
         List<ProductAdminDto> sortedProducts = products.stream()
