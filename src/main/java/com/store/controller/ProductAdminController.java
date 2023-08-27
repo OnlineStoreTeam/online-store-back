@@ -23,14 +23,12 @@ public class ProductAdminController {
 
     private final ProductAdminService productAdminService;
 
-    @CrossOrigin(origins = "*")
     @PostMapping
     public ResponseEntity<Long> addProduct(@RequestBody @Validated ProductAdminDto product) throws IOException {
         ProductAdminDto productAdminDto = productAdminService.addProduct(product);
         return new ResponseEntity<>(productAdminDto.getId(), HttpStatus.CREATED);
     }
 
-    @CrossOrigin(origins = "*")
     @GetMapping()
     public ResponseEntity<Page<ProductAdminDto>> getAllProducts(@RequestParam int page, @RequestParam int size) {
         Page<ProductAdminDto> products = productAdminService
@@ -38,14 +36,12 @@ public class ProductAdminController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "*")
     @DeleteMapping("/{productId}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long productId){
         productAdminService.deleteProduct(productId);
         return new ResponseEntity<>("Product successfully removed.", HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "*")
     @PutMapping("/{productId}")
     public ResponseEntity<ProductAdminDto> updateProduct(@PathVariable Long productId,
                                                          @RequestBody ProductAdminDto productAdminDto){

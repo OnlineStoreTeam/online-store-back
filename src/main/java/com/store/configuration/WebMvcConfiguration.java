@@ -13,13 +13,12 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
                 // Enable cross-origin request handling for the specified path pattern.
                 // Exact path mapping URIs (such as "/admin") are supported as well as Ant-style path patterns (such as "/admin/**").
                 .addMapping("/**")
-                .allowedOrigins("http://localhost:3000")
+                .allowedOrigins("*")
                 .allowedOriginPatterns("")
                 .allowCredentials(false)
-                .allowedHeaders("Content_Type")
+                .allowedHeaders("*")
                 .exposedHeaders("*")
                 .maxAge(60 *30)
-                .allowedMethods("*")
-        ;
+                .allowedMethods("*");
     }
 }
