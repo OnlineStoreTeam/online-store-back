@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface ProductService {
 
-    Page<ProductAdminDto> findAll(Pageable paging);
+    Page<ProductAdminDto> findAllSort(Pageable paging);
 
     Page<ProductAdminDto> getAllByCategory(Pageable paging, String category);
 }
