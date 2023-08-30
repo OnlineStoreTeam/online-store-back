@@ -6,9 +6,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:54250/store
-    username: postgres
-    password: postgres
+    url: postgres://st_19qm_user:edgE7VGlhZCk2knu9L1SQkPM3JTJtypQ@dpg-cjeksgs1ja0c738av4d0-a.oregon-postgres.render.com/st_19qm
+    username: st_19qm_user
+    password: edgE7VGlhZCk2knu9L1SQkPM3JTJtypQ
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -21,11 +21,3 @@ spring:
         connection:
           pool_size: 10
           autocommit: true
-
-
-
-
-gcp:
-  vars:
-    admin.user: ${ADMIN_USERNAME:admin@gmail.com}
-    admin.password: ${ADMIN_PASSWORD:12345}
