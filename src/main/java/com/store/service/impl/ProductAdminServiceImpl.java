@@ -69,7 +69,8 @@ public class ProductAdminServiceImpl implements ProductAdminService {
                 .setCategory(productAdminDto.getCategory())
                 .setDescription(productAdminDto.getDescription())
                 .setQuantity(productAdminDto.getQuantity())
-                .setProductStatus(productAdminDto.getProductStatus());
+                .setProductStatus(productAdminDto.getProductStatus())
+                .setImagePath(productAdminDto.getImagePath());
         if(productAdminDto.getQuantity() == 0){
             product.setProductStatus(ProductStatus.TEMPORARILY_ABSENT);
         }
