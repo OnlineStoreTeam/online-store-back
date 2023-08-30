@@ -16,14 +16,14 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productAdminRepository;
 
     @Override
-    public Page<ProductAdminDto> findAllSort(Pageable paging) {
+    public Page<ProductAdminDto> getAllProducts(Pageable paging) {
         return productAdminRepository
                 .findProductsByProductStatusIsNotOrderByProductStatus(ProductStatus.DELETE, paging)
                 .map(ProductAdminDto::fromEntity);
     }
 
     @Override
-    public Page<ProductAdminDto> getAllByCategory(Pageable paging, String category) {
+    public Page<ProductAdminDto> getProductsCategory(Pageable paging, String category) {
         return productAdminRepository.findProductsByCategoryAndProductStatusIsNotOrderByProductStatus
                 (category, ProductStatus.DELETE, paging).map(ProductAdminDto::fromEntity);
     }

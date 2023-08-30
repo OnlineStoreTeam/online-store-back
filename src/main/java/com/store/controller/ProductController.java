@@ -17,14 +17,14 @@ public class ProductController {
 
     @GetMapping()
     public ResponseEntity<Page<ProductAdminDto>> getAllProducts(@RequestParam int page, @RequestParam int size) {
-        Page<ProductAdminDto> products = productService.findAllSort(PageRequest.of(page, size));
+        Page<ProductAdminDto> products = productService.getAllProducts(PageRequest.of(page, size));
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @GetMapping("/categories/{category}")
     public ResponseEntity<Page<ProductAdminDto>> getProductsCategory(@RequestParam int page, @RequestParam int size,
                                                                       @PathVariable String category) {
-        Page<ProductAdminDto> products = productService.getAllByCategory(PageRequest.of(page, size), category);
+        Page<ProductAdminDto> products = productService.getProductsCategory(PageRequest.of(page, size), category);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 }
