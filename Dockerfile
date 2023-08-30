@@ -14,3 +14,10 @@ EXPOSE 8080
 COPY --from=build /build/libs/online-store-back.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
+FROM postgres
+
+ENV POSTGRES_DB st_19qm
+ENV POSTGRES_USER st_19qm_user
+ENV POSTGRES_PASSWORD edgE7VGlhZCk2knu9L1SQkPM3JTJtypQ
+EXPOSE 5432:5432
