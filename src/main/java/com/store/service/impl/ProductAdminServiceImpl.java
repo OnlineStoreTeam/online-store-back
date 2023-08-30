@@ -3,7 +3,7 @@ package com.store.service.impl;
 import com.store.dto.ProductAdminDto;
 import com.store.entity.Product;
 import com.store.entity.ProductStatus;
-import com.store.repository.ProductAdminRepository;
+import com.store.repository.ProductRepository;
 import com.store.service.ProductAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,7 +16,7 @@ import org.webjars.NotFoundException;
 @RequiredArgsConstructor
 public class ProductAdminServiceImpl implements ProductAdminService {
 
-    private final ProductAdminRepository productAdminRepository;
+    private final ProductRepository productAdminRepository;
 
     @Override
     public ProductAdminDto addProduct(ProductAdminDto productAdminDto) {
@@ -48,7 +48,8 @@ public class ProductAdminServiceImpl implements ProductAdminService {
 
     @Override
     public Page<ProductAdminDto> getActiveAndTemporarilyAbsentProducts(Pageable paging) {
-        return productAdminRepository.findAll(paging).map(ProductAdminDto::fromEntity);
+        return productAdminRepository.findProductsByProductStatusIsNot(ProductStatus.DELETE, paging)
+                .map(ProductAdminDto::fromEntity);
     }
 
     @Override

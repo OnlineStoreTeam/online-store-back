@@ -26,6 +26,7 @@ public class Product {
     private String description;
     private int quantity;
     @Column(name = "product_status")
+    @Enumerated(EnumType.STRING)
     private ProductStatus productStatus;
     @Column(name = "image_path")
     private String imagePath;
