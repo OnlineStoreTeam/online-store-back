@@ -6,7 +6,7 @@ server:
 
 spring:
   datasource:
-    url: postgres://st_19qm_user:edgE7VGlhZCk2knu9L1SQkPM3JTJtypQ@dpg-cjeksgs1ja0c738av4d0-a/st_19qm
+    url: postgres://dpg-cjeksgs1ja0c738av4d0-a:5432//st_19qm_user:edgE7VGlhZCk2knu9L1SQkPM3JTJtypQ@dpg-cjeksgs1ja0c738av4d0-a/st_19qm
     username: st_19qm_user
     password: edgE7VGlhZCk2knu9L1SQkPM3JTJtypQ
     driver-class-name: org.postgresql.Driver
