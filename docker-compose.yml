@@ -2,10 +2,10 @@ version: '3.8'
 services:
   postgres:
     image: postgres
-    container_name: store
+    container_name: st_19qm
     environment:
-      POSTGRES_DB: store
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: st_19qm
+      POSTGRES_USER: st_19qm_user
+      POSTGRES_PASSWORD: edgE7VGlhZCk2knu9L1SQkPM3JTJtypQ
     ports:
-      - "54250:5432"
+      - "5432:5432"
