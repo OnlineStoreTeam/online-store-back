@@ -2,10 +2,25 @@ version: '3.8'
 services:
   postgres:
     image: postgres
-    container_name: store
+    container_name: postgres
     environment:
-      POSTGRES_DB: store
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGDATA: ${PGDATA}
+    volumes:
+      - ${LOCAL_DATA_STORAGE}:/data/postgres-store
     ports:
-      - "54250:5432"
+      - 54250:5432
+    restart: unless-stopped
+  backend:
+    build: .
+    container_name: backend
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - 8080:8080
