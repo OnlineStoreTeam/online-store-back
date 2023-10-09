@@ -7,3 +7,8 @@
 /dataSources/
 /dataSources.local.xml
 .idea
+.idea/artifacts
+
+target
+
+online-store-back.iml
