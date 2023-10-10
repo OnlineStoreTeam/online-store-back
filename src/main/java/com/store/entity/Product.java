@@ -13,7 +13,7 @@ public class Product {
     private Long id;
 
     @NotNull
-    @Pattern(regexp = "^[A-Za-z0-9]+$", message = "Article should only contain alphanumeric characters")
+    @Pattern(regexp = "^[A-Z0-9]+$", message = "Article should only contain alphanumeric characters")
     @Size(min = 3, max = 8, message = "Article should be between 3 and 8 characters long")
     private String article;
 

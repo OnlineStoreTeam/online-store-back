@@ -27,7 +27,8 @@ public class ProductService {
     }
 
     public Page<ProductDTO> getAllProducts(Pageable pageable) {
-        return productRepository.findAll(pageable).map(productMapper::toDto);
+        return productRepository.findProductsByProductStatusIsNotOrderByProductStatus(ProductStatus.DELETED, pageable)
+                .map(productMapper::toDto);
     }
 
     public List<ProductDTO> getProductsCategory(String category, Pageable pageable) {
