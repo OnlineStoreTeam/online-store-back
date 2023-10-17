@@ -1,7 +1,7 @@
 package com.store.restcontroller;
 
 
-import com.store.dto.productDTOs.CategoryDTO;
+import com.store.dto.categoryDTOs.CategoryDTO;
 import com.store.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

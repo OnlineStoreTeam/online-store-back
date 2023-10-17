@@ -1,4 +1,4 @@
-package com.store.dto.productDTOs;
+package com.store.dto.categoryDTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package com.store.service;
 
 
-import com.store.dto.productDTOs.CategoryDTO;
+import com.store.dto.categoryDTOs.CategoryDTO;
 import com.store.entity.Category;
 import com.store.exception.CategoryNotFoundException;
 import com.store.mapper.CategoryMapper;
