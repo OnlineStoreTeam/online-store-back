@@ -8,38 +8,36 @@ import com.store.exception.DataNotFoundException;
 import com.store.mapper.ProductMapper;
 import com.store.repository.ProductRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
 
     private final ProductMapper productMapper;
 
-    public ProductService(ProductRepository productRepository, ProductMapper productMapper) {
-        this.productRepository = productRepository;
-        this.productMapper = productMapper;
-    }
 
     public Page<ProductDTO> getAllProducts(Pageable pageable) {
         return productRepository.findProductsByProductStatusIsNotOrderByProductStatus(ProductStatus.DELETED, pageable)
                 .map(productMapper::toDto);
     }
 
-    public List<ProductDTO> getProductsCategory(String category, Pageable pageable) {
-        return productMapper.toDto(
-                productRepository.findProductsByCategoryAndProductStatusIsNotOrderByProductStatus
-                        (category, ProductStatus.DELETED, pageable)
-        );
+    public Page<ProductDTO> getProductsByCategoryId(Long categoryId, Pageable pageable) {
+        return productRepository.findProductsByCategoryIdAndProductStatusIsNotOrderByProductStatus
+                (categoryId, ProductStatus.DELETED, pageable).map(productMapper::toDto);
     }
 
     public ProductDTO addProduct(ProductCreateDTO productCreateDTO) {
         return productMapper.toDto(productRepository.save(productMapper.toEntity(productCreateDTO)));
+    }
+
+    public Page<ProductDTO> searchProducts(String name, Pageable pageable) {
+        return productRepository.findProductByNameContainsIgnoreCase(name, pageable).map(productMapper::toDto);
     }
 
     public ProductDTO updateProduct(ProductUpdateDTO productUpdateDTO) {
