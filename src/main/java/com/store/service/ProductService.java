@@ -13,8 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -29,15 +27,17 @@ public class ProductService {
                 .map(productMapper::toDto);
     }
 
-    public List<ProductDTO> getProductsByCategoryId(Long categoryId, Pageable pageable) {
-        return productMapper.toDto(
-                productRepository.findProductsByCategoryIdAndProductStatusIsNotOrderByProductStatus
-                        (categoryId, ProductStatus.DELETED, pageable)
-        );
+    public Page<ProductDTO> getProductsByCategoryId(Long categoryId, Pageable pageable) {
+        return productRepository.findProductsByCategoryIdAndProductStatusIsNotOrderByProductStatus
+                (categoryId, ProductStatus.DELETED, pageable).map(productMapper::toDto);
     }
 
     public ProductDTO addProduct(ProductCreateDTO productCreateDTO) {
         return productMapper.toDto(productRepository.save(productMapper.toEntity(productCreateDTO)));
+    }
+
+    public Page<ProductDTO> searchProducts(String name, Pageable pageable) {
+        return productRepository.findProductByNameContainsIgnoreCase(name, pageable).map(productMapper::toDto);
     }
 
     public ProductDTO updateProduct(ProductUpdateDTO productUpdateDTO) {

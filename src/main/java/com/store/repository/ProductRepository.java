@@ -15,4 +15,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Page<Product> findProductsByCategoryIdAndProductStatusIsNotOrderByProductStatus
             (Long categoryId, ProductStatus productStatus, Pageable pageable);
+
+    Page<Product> findProductByNameContainsIgnoreCase(String name, Pageable pageable);
 }

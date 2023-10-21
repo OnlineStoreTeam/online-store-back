@@ -9,8 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
@@ -24,13 +22,18 @@ public class ProductController {
     }
 
     @GetMapping("/product")
-    public List<ProductDTO> getProductsCategory(Long categoryId, Pageable pageable) {
+    public Page<ProductDTO> getProductsCategory(Long categoryId, Pageable pageable) {
         return productService.getProductsByCategoryId(categoryId, pageable);
     }
 
     @PostMapping("/products")
     public ProductDTO addProduct(@RequestBody ProductCreateDTO productCreateDTO) {
         return productService.addProduct(productCreateDTO);
+    }
+
+    @GetMapping("/products/search")
+    public Page<ProductDTO> searchProducts(String name, Pageable pageable) {
+        return productService.searchProducts(name, pageable);
     }
 
     @PutMapping("/products")
