@@ -28,6 +28,13 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
+                .requiresChannel(channelConfigurer ->
+                        channelConfigurer
+                                .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+                                .requiresSecure()
+                )
+                .cors()
+                .and()
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/users/register").permitAll()
                         .requestMatchers(HttpMethod.GET).permitAll()

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://onlinestoreteam.github.io/products")
 public class ProductController {
     private final ProductService productService;
 
@@ -26,6 +26,11 @@ public class ProductController {
     @GetMapping("/product")
     public Page<ProductDTO> getProductsCategory(Long categoryId, Pageable pageable) {
         return productService.getProductsByCategoryId(categoryId, pageable);
+    }
+
+    @GetMapping("/products/{id}")
+    public ProductDTO getOneProductById(@PathVariable Long id){
+        return productService.getOneProductById(id);
     }
 
     @GetMapping("/products/search")
