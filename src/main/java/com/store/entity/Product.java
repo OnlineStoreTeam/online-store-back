@@ -35,7 +35,6 @@ public class Product {
     @ManyToOne
     private Category category;
 
-    @NotBlank
     @Pattern(regexp = "^[a-zA-Z0-9 '&!#%()*+,.:;_-]+$", message = "Description should only contain alphanumeric characters")
     @Size(min = 2, max = 255, message = "Description should be between 2 and 255 characters long")
     private String description;

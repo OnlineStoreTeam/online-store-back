@@ -1,6 +1,7 @@
 package com.store.restcontroller;
 
 
+import com.store.constants.Role;
 import com.store.dto.categoryDTOs.CategoryCreateDTO;
 import com.store.dto.categoryDTOs.CategoryDTO;
 import com.store.dto.categoryDTOs.CategoryUpdateDTO;
@@ -9,12 +10,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/category")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://onlinestoreteam.github.io/products")
 public class CategoryController {
     private final CategoryService categoryService;
 
@@ -32,16 +34,19 @@ public class CategoryController {
                 .body(categoryService.getAllCategories(pageable));
     }
 
+    @PreAuthorize("hasRole('" + Role.ADMIN + "')")
     @PostMapping
     public CategoryDTO createCategory(@RequestBody CategoryCreateDTO categoryCreateDTO) {
         return categoryService.createCategory(categoryCreateDTO);
     }
 
+    @PreAuthorize("hasRole('" + Role.ADMIN + "')")
     @PutMapping
     public CategoryDTO createCategory(@RequestBody CategoryUpdateDTO categoryUpdateDTO) {
         return categoryService.updateCategory(categoryUpdateDTO);
     }
 
+    @PreAuthorize("hasRole('" + Role.ADMIN + "')")
     @DeleteMapping("/{id}")
     public void deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);

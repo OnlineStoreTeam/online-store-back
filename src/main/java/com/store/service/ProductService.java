@@ -27,6 +27,11 @@ public class ProductService {
                 .map(productMapper::toDto);
     }
 
+    public ProductDTO getOneProductById(Long id) {
+        return productMapper.toDto(productRepository.findById(id).
+                orElseThrow(() -> new DataNotFoundException("There is no product with id" + id)));
+    }
+
     public Page<ProductDTO> getProductsByCategoryId(Long categoryId, Pageable pageable) {
         return productRepository.findProductsByCategoryIdAndProductStatusIsNotOrderByProductStatus
                 (categoryId, ProductStatus.DELETED, pageable).map(productMapper::toDto);

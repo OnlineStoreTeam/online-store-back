@@ -5,7 +5,6 @@ import com.store.dto.categoryDTOs.CategoryCreateDTO;
 import com.store.dto.categoryDTOs.CategoryDTO;
 import com.store.dto.categoryDTOs.CategoryUpdateDTO;
 import com.store.entity.Category;
-import com.store.exception.CategoryNotFoundException;
 import com.store.exception.DataNotFoundException;
 import com.store.mapper.CategoryMapper;
 import com.store.repository.CategoryRepository;
@@ -25,7 +24,7 @@ public class CategoryService {
     public CategoryDTO getCategoryById(Long categoryId) {
         Optional<Category> category = categoryRepository.findById(categoryId);
         if (category.isPresent()) return categoryMapper.toDto(category.get());
-        else throw new CategoryNotFoundException("Category with id " + categoryId + "was not found");
+        else throw new DataNotFoundException("There is no category with id " + categoryId);
     }
 
     public Page<CategoryDTO> getAllCategories(Pageable pageable) {
