@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -19,7 +20,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Configuration
 @EnableMethodSecurity
@@ -27,17 +27,17 @@ import java.util.stream.Collectors;
 public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.csrf(AbstractHttpConfigurer::disable)
                 .requiresChannel(channelConfigurer ->
                         channelConfigurer
                                 .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
                                 .requiresSecure()
                 )
-                .cors()
-                .and()
+                .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/users/register").permitAll()
                         .requestMatchers(HttpMethod.GET).permitAll()
+                        .requestMatchers("/cart").permitAll()
                         .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(resourceServerConfigurer -> resourceServerConfigurer
@@ -58,26 +58,23 @@ public class WebSecurityConfig {
     public Converter<Jwt, Collection<GrantedAuthority>> jwtGrantedAuthoritiesConverter() {
         JwtGrantedAuthoritiesConverter delegate = new JwtGrantedAuthoritiesConverter();
 
-        return new Converter<>() {
-            @Override
-            public Collection<GrantedAuthority> convert(Jwt jwt) {
-                Collection<GrantedAuthority> grantedAuthorities = delegate.convert(jwt);
+        return jwt -> {
+            Collection<GrantedAuthority> grantedAuthorities = delegate.convert(jwt);
 
-                if (jwt.getClaim("realm_access") == null) {
-                    return grantedAuthorities;
-                }
-                JSONObject realmAccess = jwt.getClaim("realm_access");
-                if (realmAccess.get("roles") == null) {
-                    return grantedAuthorities;
-                }
-                JSONArray roles = (JSONArray) realmAccess.get("roles");
-
-                final List<SimpleGrantedAuthority> keycloakAuthorities = roles.stream()
-                        .map(role -> new SimpleGrantedAuthority("" + role)).collect(Collectors.toList());
-                grantedAuthorities.addAll(keycloakAuthorities);
-
+            if (jwt.getClaim("realm_access") == null) {
                 return grantedAuthorities;
             }
+            JSONObject realmAccess = jwt.getClaim("realm_access");
+            if (realmAccess.get("roles") == null) {
+                return grantedAuthorities;
+            }
+            JSONArray roles = (JSONArray) realmAccess.get("roles");
+
+            final List<SimpleGrantedAuthority> keycloakAuthorities = roles.stream()
+                    .map(role -> new SimpleGrantedAuthority(String.valueOf(role))).toList();
+            grantedAuthorities.addAll(keycloakAuthorities);
+
+            return grantedAuthorities;
         };
     }
 }

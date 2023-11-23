@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1" author="happylocal">
+        <createTable tableName="category">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+            <column name="title" type="varchar(255)"/>
+            <column name="path" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="happylocal">
+        <createTable tableName="product">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="article" type="varchar(9)"/>
+            <column name="name" type="varchar(50)"/>
+            <column name="price" type="decimal(12,2)"/>
+            <column name="category_id" type="int">
+                <constraints foreignKeyName="category_id" references = "category(id)"/>
+            </column>
+            <column name="quantity" type="int">
+                <constraints checkConstraint="quantity => 1"/>
+            </column>
+            <column name="description" type="varchar(255)"/>
+            <column name="product_status" type="varchar(30)"/>
+            <column name="image_path" type="text"/>
+        </createTable>
+
+        <createTable tableName="cart">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="text"/>
+            <column name="product_id" type="int">
+                <constraints foreignKeyName="product_id" references="product(id)"/>
+            </column>
+            <column name="count" type="int"/>
+        </createTable>
+
+        <createTable tableName="orders">
+            <column name="number" type="varchar(30)" >
+                <constraints unique="true" primaryKey="true"/>
+            </column>
+            <column name="status" type="varchar(20)"/>
+            <column name="count" type="int">
+                <constraints checkConstraint="count => 1"/>
+            </column>
+            <column name="created_date" type="timestamp"/>
+            <column name="price" type="decimal(12,2)"/>
+            <column name="user_id" type="varchar(255)"/>
+            <column name="shipping_address" type="varchar(255)"/>
+            <column name="payment_type" type="varchar(255)"/>
+            <column name="purchased_date" type="timestamp"/>
+        </createTable>
+        
+        <createTable tableName="order_item">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="product_id" type="int">
+                <constraints foreignKeyName="product_id"/>
+            </column>
+            <column name="order_number" type="varchar(30)">
+                <constraints foreignKeyName="order_number" references="orders(number)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="happylocal">
+      <sql>insert into category(name, title, path) values
+               ('Clothing', 'title', 'clothing'),
+               ('Leads&amp;harnesses', 'title', 'leads&amp;harnesses'),
+               ('Toys', 'title', 'toys'),
+               ('Care', 'title', 'care'),
+               ('Furniture', 'title', 'furniture'),
+               ('Collars', 'title', 'collars');
+      insert into product(article,name,price,category_id,description,quantity,product_status,image_path)
+      values
+          ('Name 1','AAABBB01', 13.5, (select id from category where name = 'Clothing'), 'Product description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
+          ('Name 2','AAABBB02', 13.5, (select id from category where name = 'Toys'), 'Product description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
+          ('Name 3','AAABBB03', 13.5, (select id from category where name = 'Leads&amp;harnesses'), 'Product description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
+          ('Name 4','AAABBB04', 13.5, (select id from category where name = 'Care'), 'Product description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
+          ('Name 5','AAABBB05', 13.5, (select id from category where name = 'Furniture'), 'Product description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
+          ('Name 6','AAABBB06', 13.5, (select id from category where name = 'Care'), 'Product description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
+          ('Name 7','AAABBB07', 13.5, (select id from category where name = 'Clothing'), 'Product description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
+          ('Name 8','AAABBB08', 13.5, (select id from category where name = 'Collars'), 'Product description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
+          ('Name 9','AAABBB09', 13.5, (select id from category where name = 'Toys'), 'Product description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
+          ('Name 10','AAABBB010', 13.5, (select id from category where name = 'Furniture'), 'Product description', 240, 'ACTIVE', 'https://i.pravatar.cc');</sql>
+    </changeSet>
+</databaseChangeLog>
