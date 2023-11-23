@@ -7,22 +7,21 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.1</version>
+        <version>3.1.5</version>
         <relativePath/>
     </parent>
 
     <groupId>com</groupId>
     <artifactId>online-store-back</artifactId>
     <version>0.0.1</version>
-    <packaging>jar</packaging>
     <name>online-store-back</name>
+    <packaging>jar</packaging>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
         <hibernate.validator.version>8.0.0.Final</hibernate.validator.version>
         <mapstruct.version>1.5.3.Final</mapstruct.version>
-        <configuration.processor.version>3.0.0</configuration.processor.version>
+        <configuration.processor.version>3.1.4</configuration.processor.version>
         <keycloak.version>20.0.1</keycloak.version>
         <nimbusds.version>9.23</nimbusds.version>
         <lombok.version>1.18.30</lombok.version>
@@ -113,6 +112,11 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>4.24.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -120,25 +124,37 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.1.5</version>
+                <configuration>
+                    <mainClass>com.store.OnlineStoreBackApplication</mainClass>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
                             <goal>repackage</goal>
                         </goals>
-                        <configuration>
-                            <classifier>spring-boot</classifier>
-                            <mainClass>
-                                com.store.OnlineStoreBackApplication
-                            </mainClass>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
                 <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.store.OnlineStoreBackApplication</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <executable>true</executable>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.springframework.boot</groupId>
@@ -165,18 +181,6 @@
                     <compilerArgs>
                         <arg>-Amapstruct.defaultComponentModel=spring</arg>
                     </compilerArgs>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.3.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>com.store.OnlineStoreBackApplication</mainClass>
-                        </manifest>
-                    </archive>
                 </configuration>
             </plugin>
         </plugins>
