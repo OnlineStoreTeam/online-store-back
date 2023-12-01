@@ -6,6 +6,5 @@ RUN mvn package -DskipTests
 FROM openjdk:17
 COPY --from=build /app/target/online-store-back-0.0.1.jar /app.jar
 
-EXPOSE 5000
 
 ENTRYPOINT ["java", "-jar", "/app.jar"]

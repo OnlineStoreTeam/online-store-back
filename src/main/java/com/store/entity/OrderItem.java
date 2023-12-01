@@ -6,11 +6,8 @@ import lombok.Data;
 @Data
 @Entity
 public class OrderItem {
-    private static final String SEQ_NAME = "order_item_id_seq";
-
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_NAME)
-    @SequenceGenerator(name = SEQ_NAME, sequenceName = SEQ_NAME, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

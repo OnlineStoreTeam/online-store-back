@@ -15,8 +15,6 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
 
-
-
     public OrderDTO getOrderByUserIdAndOrderNumber(String userId, String orderNumber) {
         if (!orderRepository.existsByNumberAndUserId(orderNumber, userId)) {
             throw new DataNotFoundException("There is no order with number " + orderNumber + " for current logged user");

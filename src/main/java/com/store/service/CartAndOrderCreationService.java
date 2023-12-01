@@ -36,9 +36,9 @@ public class CartAndOrderCreationService {
     }
 
     public CartDTO addProductToCart(Long productId, String userId) {
-//        if (!cartRepository.existsByProductIdAndUserId(productId, userId)) {
-//            throw new InvalidDataException("Item with id" + productId + "is already in your cart");
-//        }
+        if (cartRepository.existsByProductIdAndUserId(productId, userId)) {
+            throw new InvalidDataException("Item with id " + productId + " is already in your cart");
+        }
         CartDTO cartDTO = new CartDTO();
         cartDTO.setUserId(userId);
         cartDTO.setProductId(productId);
@@ -91,7 +91,7 @@ public class CartAndOrderCreationService {
 
             orderItemDTO.setOrderNumber(orderDTO.getNumber());
             orderItemDTO.setProductId(cartDTO.getProductId());
-
+            orderItemDTO.setCount(cartDTO.getCount());
             orderItemDTOList.add(orderItemDTO);
 
             price = price.add(cartDTO.getProductPrice()).multiply(BigDecimal.valueOf(cartDTO.getCount()));

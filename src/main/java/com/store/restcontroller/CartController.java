@@ -17,28 +17,68 @@ public class CartController {
     private final CartAndOrderCreationService cartService;
 
     @PostMapping
-    public CartDTO addItemToCart(Long productId, Principal principal) {
-        return cartService.addProductToCart(productId, principal.getName());
+    public CartDTO addItemToCart(Long productId, Principal principal, String optionalUserIdIfNotAuthenticated) {
+        String id;
+
+        if(principal == null) {
+            id = optionalUserIdIfNotAuthenticated;
+        } else {
+            id = principal.getName();
+        }
+
+        return cartService.addProductToCart(productId, id);
     }
 
     @GetMapping
-    public List<CartDTO> getAllCarts(Principal principal) {
-        return cartService.getAllCarts(principal.getName());
+    public List<CartDTO> getAllCarts(Principal principal, String optionalUserIdIfNotAuthenticated) {
+        String id;
+
+        if(principal == null) {
+            id = optionalUserIdIfNotAuthenticated;
+        } else {
+            id = principal.getName();
+        }
+        return cartService.getAllCarts(id);
     }
 
     @PutMapping
-    public CartDTO updateCountOfItem(Principal principal, Long itemId, Integer count){
-        return cartService.updateCountOfProduct(itemId, count, principal.getName());
+    public CartDTO updateCountOfItem(Principal principal, Long itemId,
+                                     Integer count, String optionalUserIdIfNotAuthenticated){
+        String id;
+
+        if(principal == null) {
+            id = optionalUserIdIfNotAuthenticated;
+        } else {
+            id = principal.getName();
+        }
+
+        return cartService.updateCountOfProduct(itemId, count, id);
     }
 
     @DeleteMapping("/{itemId}")
-    public void deleteCartByItemId(@PathVariable Long itemId, Principal principal) {
-        cartService.deleteCartByItemId(itemId, principal.getName());
+    public void deleteCartByItemId(@PathVariable Long itemId, Principal principal,
+                                   String optionalUserIdIfNotAuthenticated) {
+        String id;
+
+        if(principal == null) {
+            id = optionalUserIdIfNotAuthenticated;
+        } else {
+            id = principal.getName();
+        }
+        cartService.deleteCartByItemId(itemId, id);
     }
 
 
     @PostMapping("/create-order")
-    public OrderDTO createOrderFromCart(@RequestParam String shippingAddress, @RequestParam String paymentType, Principal principal) {
-        return cartService.createOrderFromCart(shippingAddress, paymentType, principal.getName());
+    public OrderDTO createOrderFromCart(@RequestParam String shippingAddress, @RequestParam String paymentType,
+                                        Principal principal,  String optionalUserIdIfNotAuthenticated) {
+        String id;
+
+        if(principal == null) {
+            id = optionalUserIdIfNotAuthenticated;
+        } else {
+            id = principal.getName();
+        }
+        return cartService.createOrderFromCart(shippingAddress, paymentType, id);
     }
 }
