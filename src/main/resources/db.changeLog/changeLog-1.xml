@@ -7,7 +7,7 @@
 
     <changeSet id="1" author="happylocal">
         <createTable tableName="category">
-            <column name="id" type="serial" autoIncrement="true">
+            <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="varchar(255)"/>
@@ -18,13 +18,13 @@
 
     <changeSet id="2" author="happylocal">
         <createTable tableName="product">
-            <column name="id" type="serial" autoIncrement="true">
+            <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
             <column name="article" type="varchar(9)"/>
             <column name="name" type="varchar(50)"/>
             <column name="price" type="decimal(12,2)"/>
-            <column name="category_id" type="int">
+            <column name="category_id" type="bigint">
                 <constraints foreignKeyName="category_id" references = "category(id)"/>
             </column>
             <column name="quantity" type="int">
@@ -40,7 +40,7 @@
                 <constraints primaryKey="true"/>
             </column>
             <column name="user_id" type="text"/>
-            <column name="product_id" type="int">
+            <column name="product_id" type="bigint">
                 <constraints foreignKeyName="product_id" references="product(id)"/>
             </column>
             <column name="count" type="int"/>
@@ -54,7 +54,7 @@
             <column name="count" type="int">
                 <constraints checkConstraint="count => 1"/>
             </column>
-            <column name="created_date" type="timestamp"/>
+            <column name="created_date" type="datetime"/>
             <column name="price" type="decimal(12,2)"/>
             <column name="user_id" type="varchar(255)"/>
             <column name="shipping_address" type="varchar(255)"/>
@@ -63,10 +63,10 @@
         </createTable>
         
         <createTable tableName="order_item">
-            <column name="id" type="serial" autoIncrement="true">
+            <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="product_id" type="int">
+            <column name="product_id" type="bigint">
                 <constraints foreignKeyName="product_id"/>
             </column>
             <column name="order_number" type="varchar(30)">

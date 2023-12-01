@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.5</version>
+        <version>3.0.0</version>
         <relativePath/>
     </parent>
 
@@ -21,12 +21,10 @@
         <maven.compiler.target>17</maven.compiler.target>
         <hibernate.validator.version>8.0.0.Final</hibernate.validator.version>
         <mapstruct.version>1.5.3.Final</mapstruct.version>
-        <configuration.processor.version>3.1.4</configuration.processor.version>
+        <configuration.processor.version>3.0.0</configuration.processor.version>
         <keycloak.version>20.0.1</keycloak.version>
         <nimbusds.version>9.23</nimbusds.version>
         <lombok.version>1.18.30</lombok.version>
-        <h2.version>2.2.224</h2.version>
-        <postgresql.version>42.3.8</postgresql.version>
     </properties>
 
     <dependencies>
@@ -46,6 +44,11 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate.validator.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <scope>provided</scope>
@@ -58,9 +61,9 @@
             <version>${postgresql.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>${hibernate.validator.version}</version>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>6.1.5.Final</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -108,6 +111,11 @@
             <artifactId>spring-security-oauth2-jose</artifactId>
         </dependency>
         <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.20</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
@@ -115,7 +123,7 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <version>4.24.0</version>
+            <version>4.17.0</version>
         </dependency>
     </dependencies>
 
@@ -169,7 +177,7 @@
                         <path>
                             <groupId>org.mapstruct</groupId>
                             <artifactId>mapstruct-processor</artifactId>
-                            <version>1.5.5.Final</version>
+                            <version>1.5.3.Final</version>
                         </path>
                         <path>
                             <groupId>org.projectlombok</groupId>

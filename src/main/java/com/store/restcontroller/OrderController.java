@@ -12,14 +12,17 @@ import java.security.Principal;
 @RestController
 @RequiredArgsConstructor
 public class OrderController {
-    private OrderService orderService;
+    private final OrderService orderService;
 
     @GetMapping("order/{orderNumber}")
-    public OrderDTO getOrderByUserId(Principal principal, @PathVariable String orderNumber) {
-        String userId = principal.getName();
-        if (userId == null) {
-            userId = "non-user";
+    public OrderDTO getOrderByUserId(@PathVariable String orderNumber, Principal principal, String optionalUserIdIfNotAuthenticated) {
+        String id;
+
+        if(principal == null) {
+            id = optionalUserIdIfNotAuthenticated;
+        } else {
+            id = principal.getName();
         }
-        return orderService.getOrderByUserIdAndOrderNumber(userId, orderNumber);
+        return orderService.getOrderByUserIdAndOrderNumber(id, orderNumber);
     }
 }
