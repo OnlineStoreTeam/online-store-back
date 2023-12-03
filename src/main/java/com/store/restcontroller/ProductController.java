@@ -8,6 +8,7 @@ import com.store.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +41,7 @@ public class ProductController {
 
     @PreAuthorize("hasRole('" + Role.ADMIN + "')")
     @PostMapping("/products")
+    @ResponseStatus(HttpStatus.CREATED)
     public ProductDTO addProduct(@RequestBody ProductCreateDTO productCreateDTO) {
         return productService.addProduct(productCreateDTO);
     }
@@ -52,6 +54,7 @@ public class ProductController {
 
     @PreAuthorize("hasRole('" + Role.ADMIN + "')")
     @DeleteMapping("/products/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
     }

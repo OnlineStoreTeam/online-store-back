@@ -10,19 +10,29 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="name" type="varchar(255)"/>
-            <column name="title" type="varchar(255)"/>
-            <column name="path" type="varchar(255)"/>
+            <column name="name" type="varchar(255)">
+                <constraints unique="true"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints unique="true"/>
+            </column>
+            <column name="path" type="varchar(255)">
+                <constraints unique="true"/>
+            </column>
         </createTable>
     </changeSet>
 
     <changeSet id="2" author="happylocal">
         <createTable tableName="product">
             <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true"/>
+                <constraints primaryKey="true" unique="true"/>
             </column>
-            <column name="article" type="varchar(9)"/>
-            <column name="name" type="varchar(50)"/>
+            <column name="article" type="varchar(9)">
+                <constraints unique="true"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints unique="true"/>
+            </column>
             <column name="price" type="decimal(12,2)"/>
             <column name="category_id" type="bigint">
                 <constraints foreignKeyName="category_id" references = "category(id)"/>
@@ -30,7 +40,9 @@
             <column name="quantity" type="int">
                 <constraints checkConstraint="quantity => 1"/>
             </column>
-            <column name="description" type="varchar(255)"/>
+            <column name="description" type="varchar(255)">
+                <constraints unique="true"/>
+            </column>
             <column name="product_status" type="varchar(30)"/>
             <column name="image_path" type="text"/>
         </createTable>
@@ -54,7 +66,7 @@
             <column name="count" type="int">
                 <constraints checkConstraint="count => 1"/>
             </column>
-            <column name="created_date" type="datetime"/>
+            <column name="created_date" type="timestamp"/>
             <column name="price" type="decimal(12,2)"/>
             <column name="user_id" type="varchar(255)"/>
             <column name="shipping_address" type="varchar(255)"/>
@@ -77,23 +89,23 @@
 
     <changeSet id="3" author="happylocal">
       <sql>insert into category(name, title, path) values
-               ('Clothing', 'title', 'clothing'),
-               ('Leads&amp;harnesses', 'title', 'leads&amp;harnesses'),
-               ('Toys', 'title', 'toys'),
-               ('Care', 'title', 'care'),
-               ('Furniture', 'title', 'furniture'),
-               ('Collars', 'title', 'collars');
-      insert into product(article,name,price,category_id,description,quantity,product_status,image_path)
+               ('Clothing', 'clothing title', 'clothing'),
+               ('Leads&amp;harnesses', 'leads title', 'leads&amp;harnesses'),
+               ('Toys', 'toys title', 'toys'),
+               ('Care', 'care title', 'care'),
+               ('Furniture', 'furniture title', 'furniture'),
+               ('Collars', 'collars title', 'collars');
+      insert into product(name,article,price,category_id,description,quantity,product_status,image_path)
       values
-          ('Name 1','AAABBB01', 13.5, (select id from category where name = 'Clothing'), 'Product description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
-          ('Name 2','AAABBB02', 13.5, (select id from category where name = 'Toys'), 'Product description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
-          ('Name 3','AAABBB03', 13.5, (select id from category where name = 'Leads&amp;harnesses'), 'Product description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
-          ('Name 4','AAABBB04', 13.5, (select id from category where name = 'Care'), 'Product description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
-          ('Name 5','AAABBB05', 13.5, (select id from category where name = 'Furniture'), 'Product description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
-          ('Name 6','AAABBB06', 13.5, (select id from category where name = 'Care'), 'Product description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
-          ('Name 7','AAABBB07', 13.5, (select id from category where name = 'Clothing'), 'Product description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
-          ('Name 8','AAABBB08', 13.5, (select id from category where name = 'Collars'), 'Product description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
-          ('Name 9','AAABBB09', 13.5, (select id from category where name = 'Toys'), 'Product description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
-          ('Name 10','AAABBB010', 13.5, (select id from category where name = 'Furniture'), 'Product description', 240, 'ACTIVE', 'https://i.pravatar.cc');</sql>
+          ('Name 1','AAABBB01', 13.5, (select id from category where name = 'Clothing'), 'Name 1 description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
+          ('Name 2','AAABBB02', 13.5, (select id from category where name = 'Toys'), 'Name 2 description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
+          ('Name 3','AAABBB03', 13.5, (select id from category where name = 'Leads&amp;harnesses'), 'Name 3 description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
+          ('Name 4','AAABBB04', 13.5, (select id from category where name = 'Care'), 'Name 4 description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
+          ('Name 5','AAABBB05', 13.5, (select id from category where name = 'Furniture'), 'Name 5 description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
+          ('Name 6','AAABBB06', 13.5, (select id from category where name = 'Care'), 'Name 6 description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
+          ('Name 7','AAABBB07', 13.5, (select id from category where name = 'Clothing'), 'Name 7 description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
+          ('Name 8','AAABBB08', 13.5, (select id from category where name = 'Collars'), 'Name 8 description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
+          ('Name 9','AAABBB09', 13.5, (select id from category where name = 'Toys'), 'Name 9 description', 240, 'ACTIVE', 'https://i.pravatar.cc'),
+          ('Name 10','AAABBB010', 13.5, (select id from category where name = 'Furniture'), 'Name 10 description', 240, 'ACTIVE', 'https://i.pravatar.cc');</sql>
     </changeSet>
 </databaseChangeLog>

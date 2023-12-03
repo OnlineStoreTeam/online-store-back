@@ -4,6 +4,7 @@ import com.store.dto.cartDTOs.CartDTO;
 import com.store.dto.orderDTOs.OrderDTO;
 import com.store.service.CartAndOrderCreationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/cart")
+@CrossOrigin(origins = "https://onlinestoreteam.github.io/products")
 public class CartController {
 
     private final CartAndOrderCreationService cartService;
@@ -55,8 +57,9 @@ public class CartController {
         return cartService.updateCountOfProduct(itemId, count, id);
     }
 
-    @DeleteMapping("/{itemId}")
-    public void deleteCartByItemId(@PathVariable Long itemId, Principal principal,
+    @DeleteMapping("/{productId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCartByProductId(@PathVariable Long productId, Principal principal,
                                    String optionalUserIdIfNotAuthenticated) {
         String id;
 
@@ -65,12 +68,13 @@ public class CartController {
         } else {
             id = principal.getName();
         }
-        cartService.deleteCartByItemId(itemId, id);
+        cartService.deleteCartByProductId(productId, id);
     }
 
 
     @PostMapping("/create-order")
-    public OrderDTO createOrderFromCart(@RequestParam String shippingAddress, @RequestParam String paymentType,
+    @ResponseStatus(HttpStatus.CREATED)
+    public OrderDTO createOrderFromCart(String shippingAddress, String paymentType,
                                         Principal principal,  String optionalUserIdIfNotAuthenticated) {
         String id;
 

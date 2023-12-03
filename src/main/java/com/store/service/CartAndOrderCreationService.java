@@ -62,7 +62,7 @@ public class CartAndOrderCreationService {
         return cartMapper.toDto(cartRepository.save(cartMapper.toEntity(cartDTO)));
     }
 
-    public void deleteCartByItemId(Long productId, String userId) {
+    public void deleteCartByProductId(Long productId, String userId) {
         if (!cartRepository.existsByProductIdAndUserId(productId, userId)) {
             throw new DataNotFoundException("There is no items in cart with id " + productId + "for current logged user");
         }

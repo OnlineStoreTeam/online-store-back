@@ -3,6 +3,7 @@ package com.store.restcontroller;
 import com.store.dto.orderDTOs.OrderDTO;
 import com.store.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +12,7 @@ import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "https://onlinestoreteam.github.io/products")
 public class OrderController {
     private final OrderService orderService;
 
