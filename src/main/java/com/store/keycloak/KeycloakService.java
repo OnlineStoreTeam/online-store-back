@@ -115,7 +115,7 @@ public class KeycloakService {
 //        String path = response.getLocation().getPath();
 //        String userUuid = path.substring(path.lastIndexOf('/') + 1);
 
-        UserRepresentation users = usersResource().search(userRegisterDTO.getUsername(), true).get(0);
+        UserRepresentation users = usersResource().search(userRegisterDTO.getEmail(), true).get(0);
         userRepresentation.setId(users.getId());
         userRepresentation.setCreatedTimestamp(users.getCreatedTimestamp());
         addRolesToUser(List.of(getRole(Role.USER)), users.getId());

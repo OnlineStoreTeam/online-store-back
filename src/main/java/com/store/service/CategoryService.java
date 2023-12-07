@@ -11,6 +11,7 @@ import com.store.mapper.CategoryMapper;
 import com.store.repository.CategoryRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -37,8 +38,8 @@ public class CategoryService {
     public CategoryDTO createCategory(CategoryCreateDTO categoryCreateDTO) {
         try {
             return categoryMapper.toDto(categoryRepository.save(categoryMapper.toEntity(categoryCreateDTO)));
-        } catch (RuntimeException e) {
-            throw new InvalidDataException("Please, check for duplicates entries");
+        } catch (DataIntegrityViolationException e) {
+            throw new InvalidDataException("Please, check for duplicate entries");
         }
     }
 
@@ -48,7 +49,7 @@ public class CategoryService {
         }
         try {
             return categoryMapper.toDto(categoryRepository.save(categoryMapper.toEntity(categoryUpdateDTO)));
-        } catch (RuntimeException e) {
+        } catch (DataIntegrityViolationException e) {
             throw new InvalidDataException("Please, check for duplicate entries");
         }
     }

@@ -10,6 +10,7 @@ import com.store.mapper.ProductMapper;
 import com.store.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -39,10 +40,14 @@ public class ProductService {
     }
 
     public ProductDTO addProduct(ProductCreateDTO productCreateDTO) {
+        if (!productRepository.existsByCategoryId(productCreateDTO.getCategoryId())) {
+            throw new DataNotFoundException("There is no category with id " + productCreateDTO.getCategoryId());
+        }
+
         try {
             return productMapper.toDto(productRepository.save(productMapper.toEntity(productCreateDTO)));
-        } catch (RuntimeException e) {
-            throw new InvalidDataException("Please, check for duplicates entries");
+        } catch (DataIntegrityViolationException e) {
+            throw new InvalidDataException("Please, check for duplicate entries");
         }
     }
 
@@ -56,7 +61,7 @@ public class ProductService {
         }
         try {
             return productMapper.toDto(productRepository.save(productMapper.toEntity(productUpdateDTO)));
-        } catch (RuntimeException e) {
+        } catch (DataIntegrityViolationException e) {
             throw new InvalidDataException("Please, check for duplicate entries");
         }
     }

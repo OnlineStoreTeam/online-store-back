@@ -19,6 +19,7 @@ public class CartController {
     private final CartAndOrderCreationService cartService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public CartDTO addItemToCart(Long productId, Principal principal, String optionalUserIdIfNotAuthenticated) {
         String id;
 

@@ -10,6 +10,7 @@ import com.store.mapper.CartMapper;
 import com.store.mapper.OrderMapper;
 import com.store.repository.CartRepository;
 import com.store.repository.OrderRepository;
+import com.store.repository.ProductRepository;
 import com.store.utils.OrderNumberGenerator;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ public class CartAndOrderCreationService {
     private final CartMapper cartMapper;
     private final OrderMapper orderMapper;
     private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
 
 
     public List<CartDTO> getAllCarts(String userId) {
@@ -36,8 +38,11 @@ public class CartAndOrderCreationService {
     }
 
     public CartDTO addProductToCart(Long productId, String userId) {
+        if(!productRepository.existsById(productId)){
+            throw new DataNotFoundException("There is no product with id " + productId);
+        }
         if (cartRepository.existsByProductIdAndUserId(productId, userId)) {
-            throw new InvalidDataException("Item with id " + productId + " is already in your cart");
+            throw new InvalidDataException("Product with id " + productId + " is already in your cart");
         }
         CartDTO cartDTO = new CartDTO();
         cartDTO.setUserId(userId);
@@ -50,7 +55,7 @@ public class CartAndOrderCreationService {
 
     public CartDTO updateCountOfProduct(Long productId, Integer count, String userId) {
         if (!cartRepository.existsByProductIdAndUserId(productId, userId)) {
-            throw new DataNotFoundException("There is no cart for user with id " + userId + " and items with id " + productId);
+            throw new DataNotFoundException("There is no cart for user with id " + userId + " and products with id " + productId);
         }
         if (!(count > 1)) {
             throw new InvalidDataException("Count can't be less than 1, please check input data");
@@ -64,7 +69,7 @@ public class CartAndOrderCreationService {
 
     public void deleteCartByProductId(Long productId, String userId) {
         if (!cartRepository.existsByProductIdAndUserId(productId, userId)) {
-            throw new DataNotFoundException("There is no items in cart with id " + productId + "for current logged user");
+            throw new DataNotFoundException("There is no products in cart with id " + productId + "for current logged user");
         }
         cartRepository.deleteCartByProductId(productId);
     }
@@ -72,7 +77,7 @@ public class CartAndOrderCreationService {
 
     public OrderDTO createOrderFromCart(String shippingAddress, String paymentType, String userId) {
         if (!cartRepository.existsAllByUserId(userId)) {
-            throw new DataNotFoundException("There is no cart for current logged user");
+            throw new InvalidDataException("There is no cart for current logged user");
         }
 
         Integer count = 0;

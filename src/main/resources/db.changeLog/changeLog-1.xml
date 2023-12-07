@@ -84,6 +84,9 @@
             <column name="order_number" type="varchar(30)">
                 <constraints foreignKeyName="order_number" references="orders(number)"/>
             </column>
+            <column name="count" type="int">
+                <constraints checkConstraint="count>=1"/>
+            </column>
         </createTable>
     </changeSet>
 

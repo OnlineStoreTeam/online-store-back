@@ -5,6 +5,7 @@ import com.store.constants.Role;
 import com.store.dto.userDTOs.UserDTO;
 import com.store.dto.userDTOs.UserRegisterDTO;
 import com.store.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,7 +25,7 @@ public class UserController {
 
     @PostMapping("/users/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDTO createUser(@RequestBody UserRegisterDTO userRegisterDTO) {
+    public UserDTO createUser(@Valid @RequestBody UserRegisterDTO userRegisterDTO) {
         return userService.createUser(userRegisterDTO);
     }
 }

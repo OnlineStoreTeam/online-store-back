@@ -19,17 +19,16 @@ public class Category {
     private Long id;
 
     @NotNull
-    @Pattern(regexp = "^[A-Za-z0-9]+$", message = "Article should only contain alphanumeric characters")
+    @Pattern(regexp = "^[A-Za-z0-9!@#$%^&*() ]+$", message = "Name should only contain alphanumeric characters")
     @Size(min = 2, max = 50, message = "Name should be between 2 and 50 characters long")
     @Column(unique = true)
     private String name;
 
-    @Pattern(regexp = "^[A-Za-z0-9]+$", message = "Article should only contain alphanumeric characters")
-    @Size(min = 2, max = 50, message = "Name should be between 2 and 50 characters long")
-
+    @Pattern(regexp = "^[A-Za-z0-9 ]+$", message = "Title should only contain alphanumeric characters")
+    @Size(min = 2, max = 50, message = "Title should be between 2 and 50 characters long")
     private String title;
 
-    @Pattern(regexp = "^[A-Za-z0-9]+$", message = "Article should only contain alphanumeric characters")
+    @Pattern(regexp = "^[A-Za-z0-9!@#$%^&*() ]+$", message = "Article should only contain alphanumeric characters")
     @Size(min = 2, max = 50, message = "Name should be between 2 and 50 characters long")
     private String path;
 }
