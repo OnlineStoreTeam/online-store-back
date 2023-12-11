@@ -5,10 +5,12 @@ import com.store.dto.productDTOs.ProductDTO;
 import com.store.dto.productDTOs.ProductUpdateDTO;
 import com.store.enums.ProductStatus;
 import com.store.exception.DataNotFoundException;
+import com.store.exception.InvalidDataException;
 import com.store.mapper.ProductMapper;
 import com.store.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -38,7 +40,15 @@ public class ProductService {
     }
 
     public ProductDTO addProduct(ProductCreateDTO productCreateDTO) {
-        return productMapper.toDto(productRepository.save(productMapper.toEntity(productCreateDTO)));
+        if (!productRepository.existsByCategoryId(productCreateDTO.getCategoryId())) {
+            throw new DataNotFoundException("There is no category with id " + productCreateDTO.getCategoryId());
+        }
+
+        try {
+            return productMapper.toDto(productRepository.save(productMapper.toEntity(productCreateDTO)));
+        } catch (DataIntegrityViolationException e) {
+            throw new InvalidDataException("Please, check for duplicate entries");
+        }
     }
 
     public Page<ProductDTO> searchProducts(String name, Pageable pageable) {
@@ -49,7 +59,11 @@ public class ProductService {
         if (!productRepository.existsById(productUpdateDTO.getId())) {
             throw new DataNotFoundException("There is no product with id: " + productUpdateDTO.getId());
         }
-        return productMapper.toDto(productRepository.save(productMapper.toEntity(productUpdateDTO)));
+        try {
+            return productMapper.toDto(productRepository.save(productMapper.toEntity(productUpdateDTO)));
+        } catch (DataIntegrityViolationException e) {
+            throw new InvalidDataException("Please, check for duplicate entries");
+        }
     }
 
     public void deleteProduct(Long id) {

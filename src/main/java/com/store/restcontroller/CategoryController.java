@@ -9,6 +9,7 @@ import com.store.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,7 @@ public class CategoryController {
 
     @PreAuthorize("hasRole('" + Role.ADMIN + "')")
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public CategoryDTO createCategory(@RequestBody CategoryCreateDTO categoryCreateDTO) {
         return categoryService.createCategory(categoryCreateDTO);
     }
@@ -48,6 +50,7 @@ public class CategoryController {
 
     @PreAuthorize("hasRole('" + Role.ADMIN + "')")
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
     }

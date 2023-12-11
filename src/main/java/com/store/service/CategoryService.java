@@ -6,10 +6,12 @@ import com.store.dto.categoryDTOs.CategoryDTO;
 import com.store.dto.categoryDTOs.CategoryUpdateDTO;
 import com.store.entity.Category;
 import com.store.exception.DataNotFoundException;
+import com.store.exception.InvalidDataException;
 import com.store.mapper.CategoryMapper;
 import com.store.repository.CategoryRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -34,14 +36,22 @@ public class CategoryService {
     }
 
     public CategoryDTO createCategory(CategoryCreateDTO categoryCreateDTO) {
-        return categoryMapper.toDto(categoryRepository.save(categoryMapper.toEntity(categoryCreateDTO)));
+        try {
+            return categoryMapper.toDto(categoryRepository.save(categoryMapper.toEntity(categoryCreateDTO)));
+        } catch (DataIntegrityViolationException e) {
+            throw new InvalidDataException("Please, check for duplicate entries");
+        }
     }
 
     public CategoryDTO updateCategory(CategoryUpdateDTO categoryUpdateDTO) {
         if (!categoryRepository.existsById(categoryUpdateDTO.getId())) {
             throw new DataNotFoundException("There is no category with id " + categoryUpdateDTO.getId());
         }
-        return categoryMapper.toDto(categoryRepository.save(categoryMapper.toEntity(categoryUpdateDTO)));
+        try {
+            return categoryMapper.toDto(categoryRepository.save(categoryMapper.toEntity(categoryUpdateDTO)));
+        } catch (DataIntegrityViolationException e) {
+            throw new InvalidDataException("Please, check for duplicate entries");
+        }
     }
 
     public void deleteCategory(Long id) {
