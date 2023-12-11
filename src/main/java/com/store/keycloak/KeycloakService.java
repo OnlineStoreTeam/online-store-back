@@ -90,7 +90,6 @@ public class KeycloakService {
 
         UserRepresentation userRepresentation = new UserRepresentation();
 
-        userRepresentation.setUsername(userRegisterDTO.getUsername());
         userRepresentation.setEmail(userRegisterDTO.getEmail());
         userRepresentation.setFirstName(userRegisterDTO.getFirstName());
         userRepresentation.setLastName(userRegisterDTO.getLastName());
