@@ -10,6 +10,6 @@ import java.util.List;
 public interface FavouriteItemRepository extends JpaRepository<FavouriteItem, Long> {
     List<FavouriteItem> findAllByUserId(String userId);
     void deleteFavouriteItemByProductIdAndUserId(Long productId, String userId);
-    boolean existsByIdAndUserId(Long id, String userId);
+    boolean existsByProductIdAndUserId(Long productId, String userId);
 
 }
