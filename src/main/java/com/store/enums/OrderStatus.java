@@ -1,5 +1,5 @@
 package com.store.enums;
 
 public enum OrderStatus {
-    NEW, DONE
+    NEW, DONE, CANCELLED
 }
