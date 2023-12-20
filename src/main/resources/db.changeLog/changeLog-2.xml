@@ -15,5 +15,8 @@
             <column name="user_id" type="text"/>
         </createTable>
     </changeSet>
+    <changeSet id="5" author="happylocal">
+        <modifyDataType tableName="product" columnName="description" newDataType="text"/>
+    </changeSet>
 
 </databaseChangeLog>
