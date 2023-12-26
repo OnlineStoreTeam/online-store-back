@@ -4,7 +4,6 @@ package com.store.service;
 import com.store.dto.categoryDTOs.CategoryCreateDTO;
 import com.store.dto.categoryDTOs.CategoryDTO;
 import com.store.dto.categoryDTOs.CategoryUpdateDTO;
-import com.store.entity.Category;
 import com.store.exception.DataNotFoundException;
 import com.store.exception.InvalidDataException;
 import com.store.mapper.CategoryMapper;
@@ -16,8 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -26,9 +23,10 @@ public class CategoryService {
     private final CategoryMapper categoryMapper;
 
     public CategoryDTO getCategoryById(Long categoryId) {
-        Optional<Category> category = categoryRepository.findById(categoryId);
-        if (category.isPresent()) return categoryMapper.toDto(category.get());
-        else throw new DataNotFoundException("There is no category with id " + categoryId);
+        CategoryDTO categoryDTO = categoryMapper.toDto(categoryRepository.findById(categoryId).orElseThrow(() ->
+                new DataNotFoundException("There is no category with id " + categoryId)));
+        categoryDTO.setProductCount(categoryRepository.countItemsByCategory(categoryId));
+        return categoryDTO;
     }
 
     public Page<CategoryDTO> getAllCategories(Pageable pageable) {

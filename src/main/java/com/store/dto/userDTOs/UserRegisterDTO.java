@@ -3,11 +3,16 @@ package com.store.dto.userDTOs;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
+import lombok.Data;
+
+@Data
 public class UserRegisterDTO {
     @NotBlank(message = "Email cannot be blank")
     @Email(message = "Please, check your email")
     private String email;
+  
     private String password;
+  
     private String confirmPassword;
 
     @NotBlank(message = "First name cannot be blank")
@@ -16,45 +21,15 @@ public class UserRegisterDTO {
     private String lastName;
 
 
-    public String getEmail() {
-        return email;
-    }
+    private String password;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    private String confirmPassword;
 
-    public String getPassword() {
-        return password;
-    }
+    @NotBlank(message = "First name cannot be blank")
+    private String firstName;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+    @NotBlank(message = "Last name cannot be blank")
+    private String lastName;
 
     @Override
     public String toString() {
