@@ -28,11 +28,9 @@ public class CategoryController {
                 .body(categoryService.getCategoryById(categoryId));
     }
 
-    @GetMapping()
-    public ResponseEntity<Page<CategoryDTO>> getAllCategories(Pageable pageable) {
-        return ResponseEntity
-                .ok()
-                .body(categoryService.getAllCategories(pageable));
+    @GetMapping
+    public Page<CategoryDTO> getAllCategories(Pageable pageable) {
+        return categoryService.getAllCategories(pageable);
     }
 
     @PreAuthorize("hasRole('" + Role.ADMIN + "')")
