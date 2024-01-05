@@ -20,4 +20,8 @@
         <modifyDataType tableName="product" columnName="description" newDataType="text"/>
     </changeSet>
 
+    <changeSet id="6" author="happylocal">
+        <renameTable oldTableName="order_item" newTableName="order_product"/>
+    </changeSet>
+
 </databaseChangeLog>

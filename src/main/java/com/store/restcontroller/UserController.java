@@ -12,7 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "https://onlinestoreteam.github.io/products")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;

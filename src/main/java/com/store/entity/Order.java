@@ -21,7 +21,7 @@ public class Order {
     private Integer count;
     private String userId;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItem> orderItemList;
+    private List<OrderProduct> orderProductList;
     private String shippingAddress;
     private String paymentType;
     private ZonedDateTime purchasedDate;

@@ -16,7 +16,7 @@ import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "https://onlinestoreteam.github.io/products")
+@CrossOrigin(origins = "http://localhost:3000")
 public class OrderController {
     private final OrderService orderService;
 

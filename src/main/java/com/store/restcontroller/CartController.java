@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/cart")
-@CrossOrigin(origins = "https://onlinestoreteam.github.io/products")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CartController {
 
     private final CartAndOrderCreationService cartService;
@@ -45,7 +45,7 @@ public class CartController {
     }
 
     @PutMapping
-    public CartDTO updateCountOfItem(Principal principal, Long itemId,
+    public CartDTO updateCountOfProduct(Principal principal, Long productId,
                                      Integer count, String optionalUserIdIfNotAuthenticated){
         String id;
 
@@ -55,7 +55,7 @@ public class CartController {
             id = principal.getName();
         }
 
-        return cartService.updateCountOfProduct(itemId, count, id);
+        return cartService.updateCountOfProduct(productId, count, id);
     }
 
     @DeleteMapping("/{productId}")

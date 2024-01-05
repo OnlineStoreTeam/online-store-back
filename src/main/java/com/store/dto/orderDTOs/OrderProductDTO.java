@@ -2,12 +2,14 @@ package com.store.dto.orderDTOs;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
-public class OrderItemDTO {
+public class OrderProductDTO {
     private Long id;
     private String orderNumber;
     private Long productId;
     private String productName;
-    private String productPrice;
+    private BigDecimal productPrice;
     private Integer count;
 }

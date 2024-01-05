@@ -12,5 +12,7 @@ public interface OrderRepository extends JpaRepository<Order, String> {
 
     boolean existsByNumberAndUserId(String number, String userId);
 
+    boolean existsAllByUserId(String userId);
+
     Page<Order> findAllByUserId(String userId, Pageable pageable);
 }

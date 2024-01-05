@@ -33,12 +33,4 @@ public class Category {
 
     @Transient
     private long productCount;
-
-    public Category(Long id, String name, String title, String path, long productCount) {
-        this.id = id;
-        this.name = name;
-        this.title = title;
-        this.path = path;
-        this.productCount = productCount;
-    }
 }

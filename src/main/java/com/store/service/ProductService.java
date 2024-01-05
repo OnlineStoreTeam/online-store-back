@@ -67,8 +67,7 @@ public class ProductService {
     }
 
     public void deleteProduct(Long id) {
-        productRepository.findById(id).orElseThrow(() -> new DataNotFoundException("There is no product with id: " + id));
-        ProductDTO productDTO = productMapper.toDto(productRepository.findById(id).orElse(null));
+        ProductDTO productDTO = productMapper.toDto(productRepository.findById(id).orElseThrow(() -> new DataNotFoundException("There is no product with id: " + id)));
         productDTO.setProductStatus(ProductStatus.DELETED);
         productRepository.save(productMapper.toEntity(productDTO));
     }

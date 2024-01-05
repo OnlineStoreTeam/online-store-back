@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "https://onlinestoreteam.github.io/products")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProductController {
     private final ProductService productService;
-
 
     @GetMapping("/products")
     public Page<ProductDTO> getAllProducts(Pageable pageable) {
