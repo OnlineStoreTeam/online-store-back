@@ -24,7 +24,7 @@ public class FavouriteItemService {
         return favouriteItemMapper.toDto(favouriteItemRepository.findAllByUserId(userId));
     }
 
-    public FavouriteItemDTO addItemToFavouriteItem(String userId, Long productId) {
+    public FavouriteItemDTO addProductToFavourites(String userId, Long productId) {
         if (!productRepository.existsById(productId)) {
             throw new DataNotFoundException("There is no product with id " + productId);
         }

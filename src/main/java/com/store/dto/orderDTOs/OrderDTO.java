@@ -15,7 +15,7 @@ public class OrderDTO {
     private BigDecimal price;
     private Integer count;
     private String userId;
-    private List<OrderItemDTO> orderItemDTOList;
+    private List<OrderProductDTO> orderProductDTOList;
     private ZonedDateTime purchasedDate;
     private String shippingAddress;
     private String paymentType;

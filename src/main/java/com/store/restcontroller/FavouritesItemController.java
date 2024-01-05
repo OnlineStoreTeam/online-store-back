@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/favourites")
 public class FavouritesItemController {
     private final FavouriteItemService favouriteItemService;
@@ -30,7 +31,7 @@ public class FavouritesItemController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public FavouriteItemDTO addItemToFavouriteItems(Principal principal, String optionalUserIdIfNotAuthenticated,
+    public FavouriteItemDTO addProductToFavourites(Principal principal, String optionalUserIdIfNotAuthenticated,
                                                     Long productId) {
         String id;
 
@@ -39,7 +40,7 @@ public class FavouritesItemController {
         } else {
             id = principal.getName();
         }
-        return favouriteItemService.addItemToFavouriteItem(id, productId);
+        return favouriteItemService.addProductToFavourites(id, productId);
     }
 
     @DeleteMapping("/{productId}")

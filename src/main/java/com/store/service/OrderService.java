@@ -1,7 +1,7 @@
 package com.store.service;
 
 import com.store.dto.orderDTOs.OrderDTO;
-import com.store.dto.orderDTOs.OrderItemDTO;
+import com.store.dto.orderDTOs.OrderProductDTO;
 import com.store.enums.OrderStatus;
 import com.store.exception.DataNotFoundException;
 import com.store.mapper.OrderMapper;
@@ -35,6 +35,9 @@ public class OrderService {
     }
 
     public Page<OrderDTO> getAllOrdersByUserId(String userId, Pageable pageable) {
+        if(!orderRepository.existsAllByUserId(userId)){
+            throw new DataNotFoundException("There is no orders for current logged user");
+        }
         return orderRepository.findAllByUserId(userId, pageable).map(orderMapper::toDto);
     }
 
@@ -78,14 +81,14 @@ public class OrderService {
 
         try(CSVPrinter csvPrinter = new CSVPrinter(response.getWriter(), CSVFormat.POSTGRESQL_CSV.builder().setHeader(headers).build())) {
             for(OrderDTO orderDTO : orderDTOList) {
-                for(OrderItemDTO orderItemDTO : orderDTO.getOrderItemDTOList()){
+                for(OrderProductDTO orderProductDTO : orderDTO.getOrderProductDTOList()){
                     csvPrinter.printRecord(
                            orderDTO.getNumber(),
                             orderDTO.getUserId(),
                             orderDTO.getStatus(),
                             orderDTO.getCreatedDate(),
-                            orderItemDTO.getProductName(),
-                            orderItemDTO.getCount(),
+                            orderProductDTO.getProductName(),
+                            orderProductDTO.getCount(),
                             orderDTO.getPrice(),
                             orderDTO.getCount(),
                             orderDTO.getShippingAddress(),

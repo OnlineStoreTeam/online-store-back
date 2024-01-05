@@ -5,6 +5,10 @@ import com.store.dto.orderDTOs.OrderDTO;
 import com.store.service.OrderService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -12,7 +16,7 @@ import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "https://onlinestoreteam.github.io/products")
+@CrossOrigin(origins = "http://localhost:3000")
 public class OrderController {
     private final OrderService orderService;
 

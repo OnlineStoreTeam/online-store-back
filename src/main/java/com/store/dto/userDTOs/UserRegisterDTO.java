@@ -20,17 +20,6 @@ public class UserRegisterDTO {
     @NotBlank(message = "Last name cannot be blank")
     private String lastName;
 
-
-    private String password;
-
-    private String confirmPassword;
-
-    @NotBlank(message = "First name cannot be blank")
-    private String firstName;
-
-    @NotBlank(message = "Last name cannot be blank")
-    private String lastName;
-
     @Override
     public String toString() {
         return "{" +

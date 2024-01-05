@@ -1,9 +1,9 @@
 package com.store.mapper;
 
 import com.store.dto.orderDTOs.OrderDTO;
-import com.store.dto.orderDTOs.OrderItemDTO;
+import com.store.dto.orderDTOs.OrderProductDTO;
 import com.store.entity.Order;
-import com.store.entity.OrderItem;
+import com.store.entity.OrderProduct;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -11,26 +11,26 @@ import java.util.List;
 
 @Mapper
 public interface OrderMapper {
-    @Mapping(target = "orderItemDTOList", source = "orderItemList")
+    @Mapping(target = "orderProductDTOList", source = "orderProductList")
     OrderDTO toDto(Order order);
 
-    @Mapping(target = "orderItemDTOList", source = "orderItemList")
+    @Mapping(target = "orderProductDTOList", source = "orderProductList")
     List<OrderDTO> toDto(List<Order> orderList);
 
-    @Mapping(source = "orderItemDTOList", target = "orderItemList")
+    @Mapping(source = "orderProductDTOList", target = "orderProductList")
     Order toEntity(OrderDTO orderDTO);
 
-    List<OrderItemDTO> toOrderItemDTOList(List<OrderItem> orderItems);
+    List<OrderProductDTO> toOrderProductDTOList(List<OrderProduct> orderProducts);
 
-    List<OrderItem> toOrderItemList(List<OrderItemDTO> orderItemDTOList);
+    List<OrderProduct> toOrderProductList(List<OrderProductDTO> orderProductDTOList);
 
     @Mapping(target = "product.id", source = "productId")
     @Mapping(target = "order.number", source = "orderNumber")
-    OrderItem toOrderItem(OrderItemDTO orderItemDTO);
+    OrderProduct toOrderItem(OrderProductDTO orderProductDTO);
 
     @Mapping(target = "orderNumber", source = "order.number")
     @Mapping(target = "productId", source = "product.id")
     @Mapping(target ="productName", source = "product.name")
     @Mapping(target = "productPrice", source = "product.price")
-    OrderItemDTO toOrderItemDTO(OrderItem orderItem);
+    OrderProductDTO toOrderItemDTO(OrderProduct orderProduct);
 }

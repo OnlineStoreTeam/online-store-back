@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: happylocal
+      POSTGRES_DB: store-local
+    networks:
+      - mynetwork
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+
+  springboot-app:
+    image: melnykalex21/online-store-back-springboot-app:2.0
+    depends_on:
+      - db
+    networks:
+      - mynetwork
+    ports:
+      - 4999:4999
+
+
+networks:
+  mynetwork:
+    driver: bridge

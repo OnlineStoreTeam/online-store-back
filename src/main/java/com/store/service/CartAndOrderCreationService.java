@@ -2,7 +2,7 @@ package com.store.service;
 
 import com.store.dto.cartDTOs.CartDTO;
 import com.store.dto.orderDTOs.OrderDTO;
-import com.store.dto.orderDTOs.OrderItemDTO;
+import com.store.dto.orderDTOs.OrderProductDTO;
 import com.store.enums.OrderStatus;
 import com.store.exception.DataNotFoundException;
 import com.store.exception.InvalidDataException;
@@ -34,6 +34,9 @@ public class CartAndOrderCreationService {
 
 
     public List<CartDTO> getAllCarts(String userId) {
+        if (!cartRepository.existsAllByUserId(userId)) {
+            throw new DataNotFoundException("There is no cart for current logged user");
+        }
         return cartMapper.toDto(cartRepository.findAllByUserId(userId));
     }
 
@@ -90,14 +93,16 @@ public class CartAndOrderCreationService {
 
         List<CartDTO> cartDTOList = getAllCarts(userId);
 
-        List<OrderItemDTO> orderItemDTOList = new ArrayList<>();
+        List<OrderProductDTO> orderProductDTOList = new ArrayList<>();
         for (CartDTO cartDTO : cartDTOList) {
-            OrderItemDTO orderItemDTO = new OrderItemDTO();
+            OrderProductDTO orderProductDTO = new OrderProductDTO();
 
-            orderItemDTO.setOrderNumber(orderDTO.getNumber());
-            orderItemDTO.setProductId(cartDTO.getProductId());
-            orderItemDTO.setCount(cartDTO.getCount());
-            orderItemDTOList.add(orderItemDTO);
+            orderProductDTO.setOrderNumber(orderDTO.getNumber());
+            orderProductDTO.setProductId(cartDTO.getProductId());
+            if (cartDTO.getCount() < 1) {
+                throw new InvalidDataException("Please check count of items in your cart");
+            }
+            orderProductDTOList.add(orderProductDTO);
 
             price = price.add(cartDTO.getProductPrice()).multiply(BigDecimal.valueOf(cartDTO.getCount()));
             count += cartDTO.getCount();
@@ -107,7 +112,7 @@ public class CartAndOrderCreationService {
         orderDTO.setPaymentType(paymentType);
         orderDTO.setCount(count);
         orderDTO.setPrice(price);
-        orderDTO.setOrderItemDTOList(orderItemDTOList);
+        orderDTO.setOrderProductDTOList(orderProductDTOList);
 
         orderRepository.save(orderMapper.toEntity(orderDTO));
 
@@ -117,6 +122,10 @@ public class CartAndOrderCreationService {
     }
 
     public void deleteCart(String userId) {
+        if(!cartRepository.existsAllByUserId(userId)){
+            throw new DataNotFoundException("There is no cart for current logged user");
+        }
+
         cartRepository.deleteAllByUserId(userId);
     }
 }
